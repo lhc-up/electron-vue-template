@@ -1,0 +1,13 @@
+{
+  "name": "electron-vue-template",
+  "version": "1.0.0",
+  "description": "electron-vue-template",
+  "scripts": {
+    "start": "electron ./src/main/main.js"
+  },
+  "author": "***@iflytek.com",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^6.1.2"
+  }
+}

@@ -1,0 +1,16 @@
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+.idea/
+.DS_Store
+._DS_Store
+._*
+node_modules/
+.project
+yarn.lock
+npm-debug.log
+\._node_modules
+cache
+package-lock.json
+.vscode/
