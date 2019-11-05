@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--template for 2019年10月30日-->
+<!--<%= new Date().getFullYear()+'/'+(new Date().getMonth()+1)+'/'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes() %>-->
+<%
+function getFilePath(filename,libsPath){
+    let _filenameSearchIndex=filename.indexOf("?");
+    let _libsPathSearchIndex=libsPath.indexOf("?");
+    let _filename=filename.substr(0,_filenameSearchIndex<1?filename.length:_filenameSearchIndex);
+    let _libsPath=libsPath.substr(0,_libsPathSearchIndex<1?libsPath.length:_libsPathSearchIndex);
+    let htmlfilename=path.relative(_filename,_libsPath);
+    return libsPath;
+}
+let path = require('path'),jsArr = [],cssArr = [];
+let filename="./index.html";
+    //修正目录结构
+    for(let i=0;i<htmlWebpackPlugin.files.css.length;i++){
+        let name=getFilePath(filename,String(htmlWebpackPlugin.files.css[i]));
+        cssArr.push(name);
+    }
+    for(let i=0;i<htmlWebpackPlugin.files.js.length;i++){
+        let name=getFilePath(filename,String(htmlWebpackPlugin.files.js[i]));
+        jsArr.push(name);
+    }
+%>
+<head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <% cssArr.forEach(css=>{ %><link rel="stylesheet" href="<%= css %>" />
+    <% }) %>
+</head>
+<body>
+    <div id="app"></div>
+    <% jsArr.forEach(js=>{ %><script type="text/javascript" src="<%= js %>"></script>
+    <% }) %>
+</body>
+</html>
