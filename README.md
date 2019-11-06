@@ -1,9 +1,9 @@
 # electron-vue-template
 electron-vue-template，electron+vue+webpack，for client and web.  
 `npm i`  
-######run electron
+###### run electron
 `npm start`  
-######run vue
+###### run vue
 `npm run dev`
-######build vue
+###### build vue
 `npm run build`
