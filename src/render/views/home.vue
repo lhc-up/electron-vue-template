@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <h1>Welcome to electron-vue-template!</h1>
+        <h1>Welcome to electron-vue-template!111</h1>
         <h2>name:{{userInfo.name}}</h2>
         <h2>address:{{userInfo.address}}</h2>
         <button @click="changeAddress">设置address为tianjin</button>

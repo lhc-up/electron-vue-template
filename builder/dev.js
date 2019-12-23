@@ -3,12 +3,18 @@
 * Author: haoluo
 * Data:   2019-10-30
 **/
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'development';//开发模式
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const chalk = require('chalk');
 const http = require('http');
+const { spawn } = require('child_process');
+const electron = require('electron');
+const path = require('path');
+const { buildMain } = require('./child/buildMain.js');
+
+// 构建渲染进程
 function devRender() {
     console.log('启动渲染进程调试......');
     const webpackDevConfig = require('./webpack.render.config.js');
@@ -17,7 +23,7 @@ function devRender() {
         compiler, {
             contentBase: webpackDevConfig.output.path,
             publicPath: webpackDevConfig.output.publicPath,
-            open: true,//打开默认浏览器
+            open: false,//打开默认浏览器
             inline: true,//刷新模式
             hot: true,//热更新
             quiet: true,//除第一次编译外，其余不显示编译信息
@@ -47,6 +53,34 @@ function devRender() {
     });
 }
 
+// 启动Electron
+function startElectron() {
+    let electronProcess = spawn(electron, [path.join(process.cwd(), 'app/main.js')]);
+    electronProcess.stdout.on('data', data => {
+        // 正常输出为蓝色
+        electronLog(data, 'blue');
+    });
+    electronProcess.stderr.on('data', data => {
+        // 错误信息为红色
+        electronLog(data, 'red');
+    });
+}
+
+// 美化输出
+function electronLog(data, color) {
+    let log = '';
+    data.toString().split(/\r?\n/).forEach(line => {
+        log += `\n${line}`;
+    });
+    if (/[0-9A-z]+/.test(log)) {
+        console.log(
+            chalk[color].bold('┏ Electron -------------------') + 
+            log + 
+            chalk[color].bold('┗ ----------------------------')
+        );
+    }
+}
+
 function getHtml(res) {
     http.get(`http://localhost:8099`, (response) => {
         response.pipe(res);
@@ -55,4 +89,14 @@ function getHtml(res) {
     });
 }
 
-devRender();
+// 构建
+function build() {
+    Promise.all([buildMain(), devRender()]).then(() => {
+        startElectron();
+    }).catch(err => {
+        console.log(err);
+        process.exit();
+    });
+}
+
+build();

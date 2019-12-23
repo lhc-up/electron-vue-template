@@ -1,7 +1,7 @@
 <!-- render>views>index.vue -->
 <template>
     <div class="content">
-        <h1>order page!</h1>
+        <h1>order page！！！！!</h1>
         <button @click="goHome">go home</button>
     </div>
 </template>
