@@ -13,6 +13,10 @@ const { spawn } = require('child_process');
 const electron = require('electron');
 const path = require('path');
 const { buildMain } = require('./child/buildMain.js');
+const devServerConfig = require('../config/devServerConfig.js');
+
+const url = devServerConfig.url;
+const port = devServerConfig.port;
 
 // 构建渲染进程
 function devRender() {
@@ -42,7 +46,7 @@ function devRender() {
         }
     ).listen(8099, function(err) {
         if (err) return console.log(err);
-        console.log(`Listening at http://localhost:8099`);
+        console.log(`Listening at http://${url}:${port}`);
     });
     compiler.hooks.done.tap('doneCallback', (stats) => {
         const compilation = stats.compilation;
@@ -82,7 +86,7 @@ function electronLog(data, color) {
 }
 
 function getHtml(res) {
-    http.get(`http://localhost:8099`, (response) => {
+    http.get(`http://${url}:${port}`, (response) => {
         response.pipe(res);
     }).on('error', (err) => {
         console.log(err);

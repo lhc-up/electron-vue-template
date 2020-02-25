@@ -27,6 +27,13 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        extensions: ['.js', '.json', '.vue'],
+        alias: {
+            '@': path.resolve(__dirname, "../src"),
+            '@config': path.resolve(__dirname, "../config")
+        }
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/render/index.ejs',

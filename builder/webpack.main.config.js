@@ -37,7 +37,11 @@ module.exports = {
         ...Object.keys(dependencies || {})
     ],
     resolve: {
-        extensions: ['.js']
+        extensions: ['.js', '.json', '.vue'],
+        alias: {
+            '@': path.resolve(__dirname, "../src"),
+            '@config': path.resolve(__dirname, "../config")
+        }
     },
     plugins:[
         new webpack.NoEmitOnErrorsPlugin(),
