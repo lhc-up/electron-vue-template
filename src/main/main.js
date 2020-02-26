@@ -17,7 +17,7 @@ global.windowIds = {
 app.on('ready', () => {
     //注册快捷键打开控制台事件
     shortcut.register('Command+Control+Alt+F5');
-    mainWindow.create();
+    mainWindow.create(); 
 });
 app.on('window-all-closed', function() {
     setTimeout(() => {

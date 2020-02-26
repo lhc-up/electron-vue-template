@@ -33,14 +33,10 @@ function createWindow() {
         height: winH <= 730 ? winH : 730,
         minWidth: winW <= 1240 ? winW : 1240,
         minHeight: winH <= 730 ? winH : 730,
-        offscreen: true,
         show: true,
         center: true,
-        frame: false,  //去掉窗口边框
-        autoHideMenuBar: true, //隐藏菜单栏
-        titleBarStyle: 'customButtonsOnHover',
         simpleFullscreen: true,
-        resizable: process.platform === 'darwin', //可否调整大小
+        resizable: process.platform === 'darwin',
         movable: true, //可否移动
         minimizable: true, //可否最小化
         maximizable: true, //可否最大化
@@ -48,7 +44,6 @@ function createWindow() {
         skipTaskbar: false, //在任务栏中显示窗口
         acceptFirstMouse: true, //是否允许单击页面来激活窗口
         transparent: process.platform === 'darwin', //允许透明
-        opacity: 1,//设置窗口初始的不透明度
         closable: true,
         backgroundColor: '#fff',
         allowRunningInsecureContent: true,//允许一个 https 页面运行 http url 里的资源
@@ -60,19 +55,16 @@ function createWindow() {
             nodeIntegration: true//5.x以上版本，默认无法在渲染进程引入node模块，需要这里设置为true
         }
     };
-    // 增加session隔离配置
-    config.webPreferences.partition = `persist:${Date.now()}${Math.random()}`;
     mainWindow = new BrowserWindow(config);
     global.windowIds.main = mainWindow.webContents.id;
     // 开发环境使用http协议，生产环境使用file协议
     mainWindow.loadURL(devMode ? encodeURI(indexUrl) : filePath);
-
     //监听关闭
     mainWindow.on('closed', function () {
         mainWindow = null;
     }).on('close', function (event) {
-        mainWindow.send("close-window-render");
-        event.preventDefault();
+        console.log('close');
+        // 其他处理
     }).on('ready-to-show', function () {
         mainWindow.show();
     });

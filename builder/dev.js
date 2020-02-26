@@ -9,6 +9,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const chalk = require('chalk');
 const http = require('http');
+const repl = require('repl');
 const { spawn } = require('child_process');
 const electron = require('electron');
 const path = require('path');
@@ -44,7 +45,7 @@ function devRender() {
                 });
             }
         }
-    ).listen(8099, function(err) {
+    ).listen(port, function(err) {
         if (err) return console.log(err);
         console.log(`Listening at http://${url}:${port}`);
     });
@@ -67,6 +68,37 @@ function startElectron() {
     electronProcess.stderr.on('data', data => {
         // 错误信息为红色
         electronLog(data, 'red');
+    });
+    // 监听关闭，并调出交互模块，快捷重启
+    electronProcess.on('close', () => {
+        callRepl("Electron Closed");
+    });
+}
+
+//调出交互模块
+function callRepl(tipText) {
+    var tip = `${tipText}，reStart?(${chalk.green("Y")}/n)`;
+    const r = repl.start({
+        prompt: tip,
+        eval: (cmd, context, filename, callback) => {
+            if (cmd === "" || cmd === "\n" || cmd === "Y\n" || cmd === "y\n") {
+                console.log("\n重新进行调试...");
+                r.close();
+                reBuildApp();
+            } else {
+                process.exit();
+            }
+            callback(null);
+        }
+    });
+}
+
+// 重启
+function reBuildApp() {
+    buildMain().then(() => {
+        startElectron();
+    }).catch(err => {
+        callRepl(err);
     });
 }
 
