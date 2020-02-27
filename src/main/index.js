@@ -43,7 +43,6 @@ function createWindow() {
         fullscreen: false, //MAC下是否可以全屏
         skipTaskbar: false, //在任务栏中显示窗口
         acceptFirstMouse: true, //是否允许单击页面来激活窗口
-        transparent: process.platform === 'darwin', //允许透明
         closable: true,
         backgroundColor: '#fff',
         allowRunningInsecureContent: true,//允许一个 https 页面运行 http url 里的资源
