@@ -24,15 +24,6 @@ module.exports = {
         runtimeChunk: false,
         minimize: true
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            }
-        ]
-    },
     externals: [
         ...Object.keys(dependencies || {})
     ],

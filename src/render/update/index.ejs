@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--template for 2018年12月27日-->
+<!--<%= new Date().getFullYear()+'/'+(new Date().getMonth()+1)+'/'+new Date().getDate()+' '+new Date().getHours()+':'+new Date().getMinutes() %>-->
+<%
+let path = require('path'),jsArr = [],cssArr = [];
+let filename=htmlWebpackPlugin.options.filename;
+    //修正目录结构
+    for(let i=0;i<htmlWebpackPlugin.files.css.length;i++){
+        let name=String(htmlWebpackPlugin.files.css[i]);
+        cssArr.push(name);
+    }
+    for(let i=0;i<htmlWebpackPlugin.files.js.length;i++){
+        let name=String(htmlWebpackPlugin.files.js[i]);
+        jsArr.push(name);
+    }
+%>
+<head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <% cssArr.forEach(css=>{ %><link rel="stylesheet" href="<%= css %>" />
+    <% }) %>
+</head>
+<body>
+    <div id="app"></div>
+    <% jsArr.forEach(js=>{ %><script type="text/javascript" src="<%= js %>"></script>
+    <% }) %>
+</body>
+</html>

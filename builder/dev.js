@@ -14,6 +14,8 @@ const { spawn } = require('child_process');
 const electron = require('electron');
 const path = require('path');
 const { buildMain } = require('./child/buildMain.js');
+const { buildPreload } = require('./child/buildPreload.js');
+const { buildUpdate } = require('./child/buildUpdate.js');
 const devServerConfig = require('../config/devServerConfig.js');
 
 const url = devServerConfig.url;
@@ -95,7 +97,7 @@ function callRepl(tipText) {
 
 // 重启
 function reBuildApp() {
-    buildMain().then(() => {
+    Promise.all([buildMain(), buildPreload()]).then(() => {
         startElectron();
     }).catch(err => {
         callRepl(err);
@@ -127,7 +129,7 @@ function getHtml(res) {
 
 // 构建
 function build() {
-    Promise.all([buildMain(), devRender()]).then(() => {
+    Promise.all([buildMain(), buildPreload(), buildUpdate(), devRender()]).then(() => {
         startElectron();
     }).catch(err => {
         console.log(err);
