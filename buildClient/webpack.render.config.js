@@ -44,5 +44,6 @@ module.exports = {
             mode: devMode
         }),
         new VueLoaderPlugin()
-    ]
+    ],
+    target: 'electron-renderer'
 }

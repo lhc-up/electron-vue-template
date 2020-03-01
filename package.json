@@ -1,22 +1,75 @@
 {
   "name": "electron-vue-template",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "electron-vue-template",
+  "main": "app/main.js",
   "scripts": {
-    "start": "electron ./src/main/main.js",
-    "dev": "node ./builder/dev.js",
-    "build": "node ./builder/build.js"
+    "dev": "node ./buildClient/dev.js",
+    "devweb": "node ./buildWeb/dev.js",
+    "build": "node ./buildClient/build.js",
+    "buildweb": "node ./buildWeb/build.js"
   },
   "author": "",
   "license": "ISC",
+  "build": {
+    "asar": true,
+    "productName": "Electron+vue+webpack",
+    "appId": "com.electron.template",
+    "copyright": "Copyright © template",
+    "directories": {
+      "output": "pack"
+    },
+    "files": [
+      "app/**"
+    ],
+    "mac": {
+      "identity": "com.electron.templat",
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "${productName}.${ext}",
+      "icon": "src/main/favicon/favicon.icns"
+    },
+    "dmg": {
+      "title": "${productName}",
+      "artifactName": "${productName}.${ext}",
+      "icon": "src/main/favicon/favicon.icns"
+    },
+    "win": {
+      "legalTrademarks": "Copyright © template",
+      "publisherName": "electron",
+      "requestedExecutionLevel": "highestAvailable",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ],
+      "artifactName": "${productName}.${ext}",
+      "icon": "main/favicon/favicon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true,
+      "allowElevation": true,
+      "artifactName": "${productName}-安装包-V${version}.${ext}",
+      "runAfterFinish": true,
+      "shortcutName": "Electron+vue+webpack-template"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "archiver": "^3.1.1",
     "autoprefixer": "^9.7.4",
+    "axios": "^0.19.2",
+    "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
     "css-loader": "^3.4.2",
     "electron": "^6.0.0",
+    "electron-builder": "^22.3.2",
     "html-webpack-plugin": "^3.2.0",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",

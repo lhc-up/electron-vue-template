@@ -15,4 +15,5 @@ cache
 package-lock.json
 .vscode/
 app/
-dist/
+dist/*
+pack/*
