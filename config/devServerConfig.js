@@ -4,20 +4,23 @@
 * Data:   2020-02-25
 * Tips:   使用以下命令启动各环境配置,npm run dev [dev|test|release]
 **/
-
-let envList = ['dev', 'test', 'release'];
-let currentEnv = 'release';
-let envArg = process.argv[2];
-
-if (envArg && envList.includes(envArg)) {
-    currentEnv = envArg;
-}
-//导出服务配置
+const { server } = require("./runTimeConfig.js");
+let proxyList = ["dev", "show", "test", "release"];
+// 默认是正式站代理
+let proxy = server.release;
+let runTime = "release";
+// 根据进程参数选择代理地址
+proxyList.forEach(item => {
+    if (process.argv.indexOf(item) > 1) {
+        runTime = item;
+        proxy = server[item] || proxy;
+    }
+});
+// 导出服务配置
 module.exports = {
-    url: '127.0.0.1',
+    host: '127.0.0.1',
     port: 8098,
-    // 运行环境
-    currentEnv: currentEnv,
-    // 调试完打开浏览器
-    devComplateOpened: true
+    runTime,//运行环境
+    openBrowserAfterComplete: true,//调试完打开
+    proxy
 };

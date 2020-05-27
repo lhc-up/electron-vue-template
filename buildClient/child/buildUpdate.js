@@ -2,18 +2,18 @@
 Tip:    打包自动更新
 Author: haoluo
 Data:   2020-02-29
- */
-const chalk = require("chalk");
+*/
+const chalk = require('chalk');
 const webpack = require('webpack');
-const updateConfig = require('../webpack.update.config.js');
-function buildUpdate() {
+const updateRenderConfig = require('../webpack.update.config.js');
+function updateBuilder() {
     return new Promise((resolve, reject) => {
         console.log('打包自动更新渲染进程......');
-        const compiler = webpack(updateConfig);
+        const compiler = webpack(updateRenderConfig);
         compiler.run((err, stats) => {
             if (err) {
                 console.log('打包自动更新渲染进程遇到Error！');
-                reject(chalk.red(err));
+                reject(err);
             } else {
                 let log = '';
                 stats.compilation.errors.forEach(key => {
@@ -25,13 +25,13 @@ function buildUpdate() {
                 Object.keys(stats.compilation.assets).forEach(key => {
                     log += chalk.blue(key) + '\n';
                 });
-                log += chalk.green(`time：${(stats.endTime-stats.startTime)/1000} s\n`) + '\n';
+                log += chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + '\n';
                 console.log('打包自动更新渲染进程完毕！');
                 resolve(log);
             }
         });
     });
 }
-module.exports={
-    buildUpdate
+module.exports = {
+    updateBuilder
 }

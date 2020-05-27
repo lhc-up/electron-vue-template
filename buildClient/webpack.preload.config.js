@@ -21,6 +21,15 @@ module.exports = {
         fs: 'empty',
         __dirname:false
     },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
     externals: [
         ...Object.keys(dependencies || {})
     ],

@@ -1,22 +1,29 @@
+/**
+ * @name: web端打包配置
+ * @author: luohao
+ * @date: 2020-05-11
+ * @desc: 
+*/
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-function resolve (dir) {
-    return path.join(__dirname, '..', dir)
-}
-const devMode= process.env.NODE_ENV === 'development';
-var webpackBaseConfig= {
-    mode: devMode ? "development" : "production",
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const Autoprefixer = require('autoprefixer');
+const context = require('../src/render/libs/interface/context.js');
+
+// 是否是调试模式
+const devMode = process.env.NODE_ENV === 'development';
+var webpackBaseConfig = {
+    mode: process.env.NODE_ENV,
+    devtool: devMode ? 'eval-source-map' : false,
     entry: {
-        main: ['./src/render/index.js']
+        main: ['@babel/polyfill', './src/render/index.js']
     },
     output: {
-        path: path.join(__dirname, '../dist/'),
+        path: path.resolve(process.cwd(), 'dist'),
         publicPath: '/',
-        filename: `./js/[name]-[hash].js`,
-        chunkFilename: `./js/[name]-[hash].js`
+        filename: `.${context.name}/js/[name]${devMode ?  '' : '-[hash:8]'}.js`,
+        chunkFilename: `.${context.name}/js/[name]${devMode ? '' : '-[hash]'}.js`,
     },
     optimization: {
         runtimeChunk: false,
@@ -26,7 +33,7 @@ var webpackBaseConfig= {
             cacheGroups: {
                 vendor: {
                     test: /node_modules\//,
-                    name: "vendor",
+                    name: 'vendor',
                     priority: 10,
                     enforce: true
                 }
@@ -37,97 +44,112 @@ var webpackBaseConfig= {
         rules: [
             {
                 test: /\.vue$/,
-                use:[
-                    {
-                        loader: 'vue-loader',
-                        options: {
-                            loaders: {
-                                less:(devMode?['css-hot-loader']:[]).concat([
-                                    MiniCssExtractPlugin.loader,
-                                    {
-                                        loader: "css-loader",
-                                    },
-                                    {
-                                        loader:"less-loader",
-                                        options: {
-                                            javascriptEnabled: true
-                                        }
-                                    }
-                                ]),
-                                css:(devMode?['css-hot-loader']:[]).concat([
-                                    MiniCssExtractPlugin.loader,
-                                    {
-                                        loader: "css-loader",
-                                    }
-                                ])
-                            }
-                        }
-                    }
-                ]
+                loader: 'vue-loader'
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
-                include: [resolve('src')],
-                loader: 'babel-loader?cacheDirectory=true'
+                exclude: [/node_modules/],
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: true
+                    }
+                }
             },
             {
                 test: /\.css$/,
-                use: (devMode?['css-hot-loader']:[]).concat([
+                use: (devMode ? ['css-hot-loader'] : []).concat([
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                         options: {
                             sourceMap: true
+                        }
+                    }, {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [Autoprefixer]
                         }
                     }
                 ])
             },
             {
                 test: /\.less$/,
-                use: (devMode?['css-hot-loader']:[]).concat([
+                use: (devMode ? ['css-hot-loader'] : []).concat([
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                         options: {
                             sourceMap: true
                         }
                     },
                     {
-                        loader:"less-loader",
+                        loader: 'postcss-loader',
                         options: {
-                            javascriptEnabled: true
+                            plugins: [Autoprefixer]
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                javascriptEnabled: true
+                            }
                         }
                     }
                 ])
+            },
+            {
+                test: /\.(gif|svg|png|jpe?g|ico|hdr)(\?\S*)?$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        esModule: false,
+                        limit: 2048,
+                        name: `.${context.name}/images/[name].[hash:8].[ext]`
+                    }
+                }]
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2|otf)(\?\S*)?$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        esModule: false,
+                        limit: 2048,
+                        name: `.${context.name}/images/[name].[ext]`
+                    }
+                }]
+            },
+            {
+                test: /\.(html|tpl)$/,
+                loader: 'html-loader'
             }
         ]
     },
     resolve: {
-        extensions: ['.js','.json', '.vue'],
+        extensions: ['.js', '.json', '.vue'],
         modules: [
-            resolve('src'),
-            resolve('node_modules')
+            path.resolve(process.cwd(), 'src'),
+            path.resolve(process.cwd(), 'node_modules')
         ],
         alias: {
-            '@': path.resolve(__dirname, "../src")
+            '@': path.resolve(process.cwd(), 'src')
         }
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': devMode ? '"development"' : '"production"'
-        }),
-        new MiniCssExtractPlugin({
-            filename: devMode ? `./css/[name].css`:`./css/[name]-[hash].css`,
-            ignoreOrder: true
-        }),
         new HtmlWebpackPlugin({
             template: './src/render/index.ejs',
             filename: './index.html',
-            title: "加载中...",
-            inject: false,
-            hash: true,
-            mode:devMode //是否是调试模式
+            title: 'Electron-vue-template',
+            inject: 'body',
+            favicon: './src/main/favicon/favicon.ico',
+            hash: true
+        }),
+        new MiniCssExtractPlugin({
+            filename: `.${context.name}/css/[name]${devMode ? '' : '-[hash]'}.css`,
+            chunkFilename: `.${context.name}/css/[name]${devMode ? '' : '-[hash]'}.css`,
+            ignoreOrder: true
         }),
         new VueLoaderPlugin()
     ]

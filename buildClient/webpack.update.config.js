@@ -8,6 +8,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const Autoprefixer = require('autoprefixer');
+const context = require('../src/render/libs/interface/context.js');
 module.exports ={
     mode: process.env.NODE_ENV,
     entry: {
@@ -17,11 +19,12 @@ module.exports ={
         path:  path.join(__dirname, '../app/'),
         publicPath: '',
         filename: `./js/[name].[hash:8].js`,
+        chunkFilename: `./js/[name].[hash:8].js`,
         globalObject: 'this'
     },
     node: {
         fs: 'empty',
-        __dirname:false
+        __dirname: false
     },
     optimization: {
         runtimeChunk: false,
@@ -39,46 +42,65 @@ module.exports ={
         rules: [
             {
                 test: /\.vue$/,
-                exclude: /node_modules/,
-                use:[
-                    {
-                        loader: 'vue-loader',
-                        options: {
-                            loaders: {
-                                less: [
-                                    MiniCssExtractPlugin.loader,
-                                    {
-                                        loader: "css-loader",
-                                    },
-                                    {
-                                        loader:"less-loader",
-                                        options: {
-                                            javascriptEnabled: true
-                                        }
-                                    }
-                                ]
-                            }
-                        }
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.js$/,
+                exclude: [/node_modules/],
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        cacheDirectory: true
                     }
-                ]
+                }
             },
             {
                 test: /\.(css|less)$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                         options: {
                             sourceMap: true
                         }
                     },
                     {
-                        loader:"less-loader",
+                        loader: 'postcss-loader',
                         options: {
-                            javascriptEnabled: true
+                            plugins: [Autoprefixer]
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            lessOptions: {
+                                javascriptEnabled: true
+                            }
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(gif|svg|png|jpe?g|ico|hdr)(\?\S*)?$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        esModule: false,
+                        limit: 2048,
+                        name: `.${context.name}/images/[name].[hash:8].[ext]`
+                    }
+                }]
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2|otf)(\?\S*)?$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        esModule: false,
+                        limit: 2048,
+                        name: `.${context.name}/images/[name].[ext]`
+                    }
+                }]
             }
         ]
     },
@@ -96,10 +118,7 @@ module.exports ={
             template: './src/render/update/index.ejs',
             filename: './update.html',
             title: "检查更新",
-            inject: false
-        }),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
+            inject: true
         }),
         new VueLoaderPlugin()
     ],

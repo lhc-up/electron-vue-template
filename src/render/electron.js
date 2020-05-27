@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 let router = new VueRouter({
     mode: 'history',
     routes: routers
-})
+});
 
 //取消 Vue 所有的日志与警告
 Vue.config.silent = true;
