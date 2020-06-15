@@ -143,7 +143,7 @@ var webpackBaseConfig = {
             filename: './index.html',
             title: 'Electron-vue-template',
             inject: 'body',
-            favicon: './src/main/favicon/favicon.ico',
+            favicon: false,
             hash: true
         }),
         new MiniCssExtractPlugin({

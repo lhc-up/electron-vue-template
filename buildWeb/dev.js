@@ -19,6 +19,8 @@ const consoleInfo = require('../buildClient/libs/consoleInfo.js');
 
 const dev = {
     run() {
+        // 删除历史打包数据
+        require('del')(['./dist/*']);
         this.writeContext();
         this.runDev();
     },

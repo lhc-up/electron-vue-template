@@ -77,8 +77,7 @@ const build = {
             webpackConfig.plugins.push(new HtmlWebpackPlugin({
                 template: './src/render/index.ejs',
                 filename: `.${htmlPath}`,
-                title: '加载中...',
-                favicon: './src/main/favicon/favicon.ico',
+                favicon: false,
                 inject: 'body',
                 hash: true,
                 minify: false,
