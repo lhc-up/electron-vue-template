@@ -1,4 +1,4 @@
 module.exports = {
-    "name": "/datamanage",
-    "api": "/datamanage/api"
+    "name": "/page",
+    "api": "/api"
 }

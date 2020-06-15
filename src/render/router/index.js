@@ -7,11 +7,7 @@ module.exports = [
             author: '--',
             parentRouter: '--'
         },
-        component: (resolve) => {
-            require.ensure([], () => {
-                return resolve(require('../views/index.vue'))
-            }, "index")
-        },
+        component: () => import('../views/index.vue'),
         children: [
             {
                 path: '/home.html',
@@ -21,11 +17,7 @@ module.exports = [
                     author: '--',
                     parentRouter: '--'
                 },
-                component: (resolve) => {
-                    require.ensure([], () => {
-                        return resolve(require('../views/home.vue'))
-                    }, "home")
-                },
+                component: () => import('../views/home.vue'),
                 children: []
             },
             {
@@ -36,11 +28,7 @@ module.exports = [
                     author: '--',
                     parentRouter: '--'
                 },
-                component: (resolve) => {
-                    require.ensure([], () => {
-                        return resolve(require('../views/order.vue'))
-                    }, "order")
-                },
+                component: () => import('../views/order.vue'),
                 children: []
             }
         ]
