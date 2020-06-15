@@ -1,8 +1,8 @@
 /*
-Tip:    自动更新配置
-Author: haoluo
-Data:   2020-02-29
- */
+* Tip:    自动更新配置
+* Author: haoluo
+* Data:   2020-02-29
+*/
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -118,7 +118,7 @@ module.exports ={
             template: './src/render/update/index.ejs',
             filename: './update.html',
             title: "检查更新",
-            inject: true
+            inject: 'body'
         }),
         new VueLoaderPlugin()
     ],

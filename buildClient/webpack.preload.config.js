@@ -1,6 +1,6 @@
 /*
-Tip:  preload 打包配置
- */
+* Tip:  preload 打包配置
+*/
 const path=require('path');
 const { dependencies } = require('../package.json');
 module.exports = {

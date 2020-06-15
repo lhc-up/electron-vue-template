@@ -1,4 +1,4 @@
 module.exports = {
     "name": "/page",
-    "api": "/api"
+    "api": "http://55444.1111.cn/api"
 }

@@ -1,7 +1,7 @@
 /*
-Tip:    打包自动更新
-Author: haoluo
-Data:   2020-02-29
+* Tip:    打包自动更新
+* Author: haoluo
+* Data:   2020-02-29
 */
 const chalk = require('chalk');
 const webpack = require('webpack');

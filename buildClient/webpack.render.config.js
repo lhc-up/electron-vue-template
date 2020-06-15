@@ -1,8 +1,8 @@
 /*
-Name:    渲染进程配置
-Author: haoluo
-Date:   2019-10-30
- */
+* Name:    渲染进程配置
+* Author: haoluo
+* Date:   2019-10-30
+*/
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
