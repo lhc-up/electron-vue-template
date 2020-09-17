@@ -77,6 +77,7 @@ export default {
         runMain(newVersionPath, version){
             if (!newVersionPath && !version) {
                 if (this.localVersion.join('.') !== this.onlineVersion.join('.')) {
+                    const userDataPath = remote.app.getPath('userData');
                     newVersionPath = path.join(userDataPath,`electron-vue-template-${this.setup.versionType}-v${this.localVersion.join('.')}`);
                     version = this.localVersion;
                 }  
