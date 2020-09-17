@@ -3,7 +3,7 @@
     "status": "success",
     "data": {
         "webMode": false,
-        "tip": "update数组中必须按照version降序排列！",
+        "tip": "update数组中必须按照version降序排列！hard字段标记是否需要强制更新。",
         "update": [
             {
                 "version": [
@@ -13,8 +13,9 @@
                     1
                 ],
                 "title": "小版本更新",
-                "zipUrl": "",
-                "exeUrl": "",
+                "hard": false,
+                "zipUrl": "https://raw.githubusercontent.com/luohao8023/electron-vue-template/master/updateFiles/release-1.0.0.1.zip",
+                "exeUrl": "https://raw.githubusercontent.com/luohao8023/electron-vue-template/master/updateFiles/xxxx-1.0.0.1.exe",
                 "time": 1557041665892,
                 "logs": [
                     {
