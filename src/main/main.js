@@ -1,6 +1,8 @@
 require("./libs/runCheck.js")(); //禁止打开多份
+require('./libs/compress.js');
 const shortcut = require("./libs/shortcut.js"); //注册快捷键
 const { app, BrowserWindow, ipcMain } = require("electron");
+const { setVal } = require('@/render/libs/js/settingsInfo.js');
 
 let updateWin = require('./update.js');
 let indexWin = require('./index.js');
@@ -34,8 +36,8 @@ app.on('ready', () => {
 //启动主窗体
 ipcMain.on('create-main', (event, arg) => {
     // h5页面指向指定版本
-    // global.wwwroot.path = arg.newVersionPath ? arg.newVersionPath : __dirname;
-    // if (arg.version) setVal('version','smallVersion', arg.version);
+    global.wwwroot.path = arg.newVersionPath || __dirname;
+    if (arg.version) setVal('version','smallVersion', arg.version);
     indexWin.create();
     startWin.destroy();
 });

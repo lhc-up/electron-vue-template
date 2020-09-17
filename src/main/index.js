@@ -24,8 +24,9 @@ const filter = {
 function createWindow() {
     // 首页路径，file协议,pathToFileURL得到编码过的URL
     // url.pathToFileURL:NodeJs v10.12.0，低版本可用url.format代替
-    let wwwroot = global.wwwroot.path ? global.wwwroot.path : __dirname;
+    let wwwroot = global.wwwroot.path || __dirname;
     let filePath = url.pathToFileURL(path.join(wwwroot, 'index.html')).href;
+    console.log(filePath)
     let indexUrl = `http://${devServerConfig.host}:${devServerConfig.port}/`;
 
     let config = {

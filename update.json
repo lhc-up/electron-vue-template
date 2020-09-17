@@ -2,7 +2,6 @@
     "message": "获取版本信息成功",
     "status": "success",
     "data": {
-        "webMode": false,
         "tip": "update数组中必须按照version降序排列！hard字段标记是否需要强制更新。",
         "update": [
             {
