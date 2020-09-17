@@ -161,7 +161,6 @@ export default {
                     });
                     const newVersionPath = path.join(userDataPath, fileNameWithOutExt);
                     // 启动主程序，页面路径指向刚更新的小版本文件
-                    debugger
                     this.runMain(newVersionPath, this.onlineVersion);
                 }
             }).catch(err => {
@@ -175,16 +174,6 @@ export default {
     mounted(){
         this.getLocalVersion();
         this.getOnlineVersion();
-        // 更新逻辑看下面伪代码
-        // const v1 = getOnlineVersion();
-        // const v2 = getLocalVersion();
-        // const needUpdate = checkVersion(v1, v2);
-        // if (needUpdate) {
-        //     downloadVersion();
-        // }
-        
-        // this.runMain();
-        // console.log(setup)
     }
 }
 </script>
