@@ -1,0 +1,32 @@
+{
+    "message": "获取版本信息成功",
+    "status": "success",
+    "data": {
+        "webMode": false,
+        "tip": "update数组中必须按照version降序排列！",
+        "update": [
+            {
+                "version": [
+                    1,
+                    0,
+                    0,
+                    1
+                ],
+                "title": "小版本更新",
+                "zipUrl": "",
+                "exeUrl": "",
+                "time": 1557041665892,
+                "logs": [
+                    {
+                        "title": "测试小版本更新",
+                        "RD": "luohao"
+                    },
+                    {
+                        "title": "---===////",
+                        "RD": "luohao"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -4,13 +4,16 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 
 let updateWin = require('./update.js');
 let indexWin = require('./index.js');
-let mainWindow;
+let startWin;
 
 // (electron) The default value of app.allowRendererProcessReuse is deprecated, it is currently "false".  
 // It will change to be "true" in Electron 9.  
 // For more information please check https://github.com/electron/electron/issues/18397
 // 手动设置为false，跟当前默认值保持一致，同时可清除终端中的log警告
 app.allowRendererProcessReuse = false;
+
+// 禁用硬件加速
+app.disableHardwareAcceleration();
 
 //注册全局变量
 // 页面跟路径配置，优先使用此配置，考虑到小版本更新时，版本之间的切换
@@ -26,7 +29,7 @@ global.windowIds = {
 app.on('ready', () => {
     //注册快捷键打开控制台事件
     shortcut.register('Command+Control+Alt+F5');
-    mainWindow = updateWin.create();
+    startWin = updateWin.create();
 });
 //启动主窗体
 ipcMain.on('create-main', (event, arg) => {
@@ -34,7 +37,7 @@ ipcMain.on('create-main', (event, arg) => {
     // global.wwwroot.path = arg.newVersionPath ? arg.newVersionPath : __dirname;
     // if (arg.version) setVal('version','smallVersion', arg.version);
     indexWin.create();
-    mainWindow.destroy();
+    startWin.destroy();
 });
 
 app.on('window-all-closed', function () {

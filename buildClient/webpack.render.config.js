@@ -7,7 +7,6 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Autoprefixer = require('autoprefixer');
 const context = require('../src/render/libs/interface/context.js');
 
 // 是否是调试模式
@@ -51,12 +50,24 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: [/node_modules/],
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: true
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
+                    },
+                    {
+                        loader: path.resolve('buildClient/libs/conditionCompileLoader.js'),
+                        options: {
+                            conditions: {
+                                // 不配置默认为false
+                                'ELECTRON': true,
+                                'WEB': false
+                            }
+                        }
                     }
-                }
+                ]
             },
             {
                 test: /\.css$/,
@@ -66,12 +77,6 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [Autoprefixer]
                         }
                     }
                 ])
@@ -84,12 +89,6 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             sourceMap: true
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins: [Autoprefixer]
                         }
                     },
                     {
@@ -129,18 +128,18 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json', '.vue'],
         alias: {
-            '@': path.resolve(__dirname, "../src"),
-            '@config': path.resolve(__dirname, "../config")
+            '@': path.resolve(__dirname, '../src'),
+            '@config': path.resolve(__dirname, '../config'),
+            '@images': path.resolve(__dirname, '../src/render/libs/images')
         }
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/render/index.ejs',
+            template: './src/render/electron.ejs',
             filename: './index.html',
             title: 'electron-vue-template',
             inject: 'body',
-            hash: true,
-            mode: devMode
+            hash: false
         }),
         new MiniCssExtractPlugin({
             filename: devMode ? `[name]-render.css` : `[name]-render.[hash:8].css`,

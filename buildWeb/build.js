@@ -19,7 +19,7 @@ const context = require('../src/render/libs/interface/baseContext.js');
 const build = {
     run() {
         // 输出运行环境
-        consoleInfo.runTime(devServerConfig.runTime);
+        consoleInfo.runTime(devServerConfig.currEnv);
         // 删除历史打包数据
         require('del')(['./dist/*']);
         this.writeContext();
@@ -51,7 +51,7 @@ const build = {
             log += chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + '\n';
             console.log(log);
             // 输出运行环境
-            consoleInfo.runTime(devServerConfig.runTime);
+            consoleInfo.runTime(devServerConfig.currEnv);
         });
     },
     // 添加额外的webpack插件

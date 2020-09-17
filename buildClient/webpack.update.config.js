@@ -107,7 +107,9 @@ module.exports ={
     resolve: {
         extensions: ['.js', '.json', '.vue'],
         alias: {
-            '@': path.resolve(__dirname, '../src')
+            '@': path.resolve(__dirname, '../src'),
+            '@config': path.resolve(__dirname, '../config'),
+            '@images': path.resolve(__dirname, '../src/render/libs/images')
         }
     },
     plugins: [

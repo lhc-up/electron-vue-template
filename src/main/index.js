@@ -7,7 +7,6 @@ const {
     BrowserWindow,
     dialog
 } = require("electron");
-const electron = require("electron");
 const process = require("process");
 const url = require("url");
 const path = require("path");
@@ -17,23 +16,24 @@ const devServerConfig = require('@config/devServerConfig.js');
 const devMode = process.env.NODE_ENV === "development";
 let mainWindow = null;
 
+// 需要过滤处理cookie的域名
 const filter = {
-    urls: ['http://*.kakayang.cn/*']
+    urls: ['https://kakayang.cn/*', 'https://test.kakayang.cn/*']
 };
 //创建窗口
 function createWindow() {
     // 首页路径，file协议,pathToFileURL得到编码过的URL
+    // url.pathToFileURL:NodeJs v10.12.0，低版本可用url.format代替
     let wwwroot = global.wwwroot.path ? global.wwwroot.path : __dirname;
     let filePath = url.pathToFileURL(path.join(wwwroot, 'index.html')).href;
-    let indexUrl = `http://${devServerConfig.url}:${devServerConfig.port}/`;
-    let winW = electron.screen.getPrimaryDisplay().workAreaSize.width,
-        winH = electron.screen.getPrimaryDisplay().workAreaSize.height;
+    let indexUrl = `http://${devServerConfig.host}:${devServerConfig.port}/`;
+
     let config = {
         title: "electron-vue-template",
-        width: winW <= 1240 ? winW : 1240,
-        height: winH <= 730 ? winH : 730,
-        minWidth: winW <= 1240 ? winW : 1240,
-        minHeight: winH <= 730 ? winH : 730,
+        width: 1240,
+        height: 730,
+        minWidth: 1240,
+        minHeight: 730,
         show: true,
         center: true,
         simpleFullscreen: true,

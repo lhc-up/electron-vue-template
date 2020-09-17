@@ -1,11 +1,11 @@
 export default {
     //设置用户信息
-    setUserInfo(state, config) {
-        if (!config) {
+    setUserInfo(state, userInfo) {
+        if (!userInfo) {
             state.userInfo = {};
         }
-        for (var objName in config) {
-            state.userInfo[objName] = config[objName];
+        for (let key in userInfo) {
+            state.userInfo[key] = userInfo[key];
         }
     }
 }

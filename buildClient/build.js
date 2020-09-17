@@ -38,7 +38,6 @@ const build = {
         const runTimeObj = {
             dev: '开发版',
             test: '测试版',
-            show: '演示版',
             release: '正式版'
         };
         setup.versionType = 'release';
@@ -51,8 +50,6 @@ const build = {
                 setup.versionName = runTimeObj[key];
             }
         });
-        // 判断是否是正式版本
-        setup.isRelease = setup.versionName === runTimeObj.release;
         // 输出运行环境
         consoleInfo.runTime(setup.versionType);
         this.setup = setup;
@@ -66,7 +63,7 @@ const build = {
         // 得到上下文
         const context = require('../src/render/libs/interface/baseContext.js');
         // 得到各环境服务地址
-        const { serverUrl } = require('../config/runTimeConfig.js');
+        const { serverUrl } = require('../config/proxyConfig.js');
         context.api = serverUrl[this.setup.versionType] + context.api;
         fs.writeFileSync(path.join(__dirname, '../src/render/libs/interface/context.js'), `module.exports = ${JSON.stringify(context, null, 4)}`);
     },
@@ -118,7 +115,7 @@ const build = {
                 // 输出运行环境
                 consoleInfo.runTime(this.setup.versionType);
                 // 删除无用日志文件
-                del(['./pack/*.yaml', './pack/*.blockmap']);
+                del(['./pack/*.yaml', './pack/*.yml', './pack/*.blockmap']);
                 this.buildEnd();
             }).catch(error => {
                 console.error(error);

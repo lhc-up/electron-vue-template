@@ -13,9 +13,11 @@ let router = new VueRouter({
 
 //取消 Vue 所有的日志与警告
 Vue.config.silent = true;
-new Vue({
+const app = new Vue({
     el: '#app',
     router: router,
     store: store,
     render: h => h(index)
 });
+
+window.myApp = app;

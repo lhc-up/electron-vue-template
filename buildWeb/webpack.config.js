@@ -49,12 +49,24 @@ var webpackBaseConfig = {
             {
                 test: /\.js$/,
                 exclude: [/node_modules/],
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        cacheDirectory: true
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
+                    },
+                    {
+                        loader: path.resolve('buildClient/libs/conditionCompileLoader.js'),
+                        options: {
+                            conditions: {
+                                // 不配置默认为false
+                                'ELECTRON': false,
+                                'WEB': true
+                            }
+                        }
                     }
-                }
+                ]
             },
             {
                 test: /\.css$/,
@@ -134,7 +146,9 @@ var webpackBaseConfig = {
             path.resolve(process.cwd(), 'node_modules')
         ],
         alias: {
-            '@': path.resolve(process.cwd(), 'src')
+            '@': path.resolve(process.cwd(), 'src'),
+            '@config': path.resolve(__dirname, '../config'),
+            '@images': path.resolve(__dirname, '../src/render/libs/images')
         }
     },
     plugins: [
@@ -143,8 +157,7 @@ var webpackBaseConfig = {
             filename: './index.html',
             title: 'Electron-vue-template',
             inject: 'body',
-            favicon: false,
-            hash: true
+            favicon: false
         }),
         new MiniCssExtractPlugin({
             filename: `.${context.name}/css/[name]${devMode ? '' : '-[hash]'}.css`,

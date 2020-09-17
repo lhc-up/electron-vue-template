@@ -38,7 +38,8 @@ const dev = {
         webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
         webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
 
-        consoleInfo.runTime(devServerConfig.runTime);//输出运行环境
+        // 输出运行环境
+        consoleInfo.runTime(devServerConfig.currEnv);
 
         let { host, port, proxy } = devServerConfig;
         // 同时调试web端和客户端，区分端口

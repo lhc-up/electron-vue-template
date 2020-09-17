@@ -7,7 +7,5 @@ module.exports = {
     ],
     "versionType": "release",
     "versionName": "正式版",
-    "publishTime": 1592218220827,
-    "smallVersion": 1,
-    "isRelease": true
+    "publishTime": 1600313538617
 }

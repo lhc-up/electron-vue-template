@@ -6,10 +6,10 @@
  * npm run devApp 调试客户端
  * 参数：dev  为开发环境
  * 参数：test 为测试环境
- * 参数：show 为演示环境
- * 不传[show/test/dev]参数，默认为release正式环境
+ * 不传[test/dev]参数，默认为release正式环境
 */
 process.env.NODE_ENV = 'development';
+
 const path = require('path');
 const fs = require('fs');
 const repl = require('repl');
@@ -40,7 +40,6 @@ const dev = {
         const runTimeObj = {
             dev: '开发版',
             test: '测试版',
-            show: '演示版',
             release: '正式版'
         };
         setup.versionType = 'release';
@@ -53,8 +52,6 @@ const dev = {
                 setup.versionName = runTimeObj[key];
             };
         });
-        // 判断是否是正式版本
-        setup.isRelease = setup.versionName === runTimeObj.release;
         // 输出运行环境
         consoleInfo.runTime(setup.versionType);
         this.setup = setup;
@@ -68,7 +65,7 @@ const dev = {
         // 得到上下文基础配置
         const context = require('../src/render/libs/interface/baseContext.js');
         // 得到各环境服务地址
-        const { serverUrl } = require('../config/runTimeConfig.js');
+        const { serverUrl } = require('../config/proxyConfig.js');
         context.api = serverUrl[this.setup.versionType] + context.api;
         fs.writeFileSync(path.join(__dirname, '../src/render/libs/interface/context.js'), `module.exports = ${JSON.stringify(context, null, 4)}`);
     },

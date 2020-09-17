@@ -9,9 +9,11 @@
 export default {
     methods: {},
     mounted() {
-        this.$router.push({
-            name: 'home'
-        });
+        if (this.$route.path === '/' || this.$route.name === 'index') {
+            this.$router.push({
+                name: 'home'
+            });
+        }
     }
 }
 </script>
