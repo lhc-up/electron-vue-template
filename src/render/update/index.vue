@@ -75,13 +75,13 @@ export default {
     methods:{
         // 跳转到主窗口
         runMain(newVersionPath, version){
-            if (!newVersionPath && !version) {
-                if (this.localVersion.join('.') !== this.onlineVersion.join('.')) {
-                    const userDataPath = remote.app.getPath('userData');
-                    newVersionPath = path.join(userDataPath,`electron-vue-template-${this.setup.versionType}-v${this.localVersion.join('.')}`);
-                    version = this.localVersion;
-                }  
-            }
+            // if (!newVersionPath && !version) {
+            //     if (this.localVersion.join('.') !== this.onlineVersion.join('.')) {
+            //         const userDataPath = remote.app.getPath('userData');
+            //         newVersionPath = path.join(userDataPath,`electron-vue-template-${this.setup.versionType}-v${this.localVersion.join('.')}`);
+            //         version = this.localVersion;
+            //     }  
+            // }
             ipcRenderer.send('create-main', {
                 newVersionPath,
                 version

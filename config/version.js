@@ -3,9 +3,9 @@ module.exports = {
         1,
         0,
         0,
-        1
+        0
     ],
     "versionType": "release",
     "versionName": "正式版",
-    "publishTime": 1600331030782
+    "publishTime": 1601031927329
 }
