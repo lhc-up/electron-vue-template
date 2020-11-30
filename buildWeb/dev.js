@@ -78,7 +78,7 @@ const dev = {
                 console.log(chalk.red(`${key}:${stats.compilation.errors[key]}`));
             });
             console.log(chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + chalk.white('调试完毕'));
-            consoleInfo.runTime(devServerConfig.runTime);//输出运行环境
+            consoleInfo.runTime(devServerConfig.currEnv);//输出运行环境
             if (devServerConfig.openBrowserAfterComplete) {
                 const cmd = os.platform() === 'win32' ? 'explorer' : 'open';
                 require('child_process').exec(`${cmd} 'http://${host}:${port}'`);

@@ -6,7 +6,7 @@
         <h2>address:{{userInfo.address}}</h2>
         <button @click="changeAddress">设置address为tianjin</button>
         <!-- <button @click="toOrderPage">去订单页</button> -->
-        <router-link to="order" tag="button">去订单页</router-link>
+        <router-link :to="{name: 'order'}" tag="button">去订单页</router-link>
     </div>
 </template>
 
