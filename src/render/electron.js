@@ -7,7 +7,7 @@ import index from './views/index.vue';
 Vue.use(VueRouter);
 
 let router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     routes: routers
 });
 
