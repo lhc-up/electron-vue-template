@@ -1,4 +1,4 @@
 module.exports = {
     "name": "/pageContext",
-    "api": "/api"
+    "api": "https://backend.release.com/api"
 }
