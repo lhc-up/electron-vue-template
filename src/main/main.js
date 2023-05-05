@@ -3,6 +3,8 @@ require('./libs/compress.js');
 const shortcut = require("./libs/shortcut.js"); //注册快捷键
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { setVal } = require('@/render/libs/js/settingsInfo.js');
+const remote = require('@electron/remote/main');
+remote.initialize();
 
 let updateWin = require('./update.js');
 let indexWin = require('./index.js');

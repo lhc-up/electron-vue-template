@@ -12,6 +12,7 @@ const url = require("url");
 const path = require("path");
 const cookie = require('cookie');
 const devServerConfig = require('@config/devServerConfig.js');
+const remote = require('@electron/remote/main');
 
 const devMode = process.env.NODE_ENV === "development";
 let mainWindow = null;
@@ -54,10 +55,12 @@ function createWindow() {
             allowDisplayingInsecureContent: true,//允许一个使用 https的界面来展示由 http URLs 传过来的资源
             allowRunningInsecureContent: true, //允许一个 https 页面运行 http url 里的资源
             preload: path.join(__dirname, 'preload.js'),//预加载js
-            nodeIntegration: true//5.x以上版本，默认无法在渲染进程引入node模块，需要这里设置为true
+            nodeIntegration: true,//5.x以上版本，默认无法在渲染进程引入node模块，需要这里设置为true
+            contextIsolation: false//11.x以上版本，需要把此项设置为false，才可以在渲染进程使用node模块
         }
     };
     mainWindow = new BrowserWindow(config);
+    remote.enable(mainWindow.webContents);
     global.windowIds.main = mainWindow.webContents.id;
     // 开发环境使用http协议，生产环境使用file协议
     mainWindow.loadURL(devMode ? encodeURI(indexUrl) : filePath);

@@ -27,7 +27,8 @@
     </div>
 </template>
 <script>
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
+const { app } = require('@electron/remote');
 const { hasKey, getVal } = require('@/render/libs/js/settingsInfo.js');
 const setup = require('@config/version.js');
 const axios = require('axios');
@@ -77,7 +78,7 @@ export default {
         runMain(newVersionPath, version){
             // if (!newVersionPath && !version) {
             //     if (this.localVersion.join('.') !== this.onlineVersion.join('.')) {
-            //         const userDataPath = remote.app.getPath('userData');
+            //         const userDataPath = app.getPath('userData');
             //         newVersionPath = path.join(userDataPath,`electron-vue-template-${this.setup.versionType}-v${this.localVersion.join('.')}`);
             //         version = this.localVersion;
             //     }  
@@ -144,8 +145,8 @@ export default {
                 // 存储的文件名称，自定义格式
                 const fileName = `electron-vue-template-${this.setup.versionType}-v${this.onlineVersion.join('.')}${ext}`;
                 // 系统临时文件夹
-                const tempPath = remote.app.getPath('temp');
-                const userDataPath = remote.app.getPath('userData');
+                const tempPath = app.getPath('temp');
+                const userDataPath = app.getPath('userData');
                 fs.writeFileSync(path.join(tempPath, fileName), Buffer.from(res.data));
                 if (this.onlineVersion.join('') - this.localVersion.join('') >= 100) {
                     // 大版本更新，执行安装程序
