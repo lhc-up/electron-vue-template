@@ -19,55 +19,12 @@ const electron = require('electron');
 const consoleInfo = require('./libs/consoleInfo.js');
 const { mainBuilder } = require('./child/buildMain.js');
 const { updateBuilder } = require('./child/buildUpdate.js');
+const config = require('../config/index.js');
 
 const dev = {
-    // 版本信息
-    setup: {},
     run() {
-        // 初始化版本信息
-        this.initSetup();
-        // 写出版本配置文件
-        this.writeVersionConfig();
-        // 写出上下文
-        this.writeContext();
         // 启动调试
         this.runDev();
-    },
-    // 初始化版本信息
-    initSetup() {
-        // 得到原始版本文件信息
-        const setup = require('../config/version.js');
-        const runTimeObj = {
-            dev: '开发版',
-            test: '测试版',
-            release: '正式版'
-        };
-        setup.versionType = 'release';
-        setup.versionName = runTimeObj.release;
-        // 发布时间
-        setup.publishTime = Date.now();
-        Object.keys(runTimeObj).forEach(key => {
-            if (process.argv.indexOf(key) > 1) {
-                setup.versionType = key;
-                setup.versionName = runTimeObj[key];
-            };
-        });
-        // 输出运行环境
-        consoleInfo.runTime(setup.versionType);
-        this.setup = setup;
-    },
-    // 写出版本配置文件
-    writeVersionConfig() {
-        fs.writeFileSync(path.join(__dirname, '../config/version.js'), `module.exports = ${JSON.stringify(this.setup, null, 4)}`);
-    },
-    // 写出上下文
-    writeContext() {
-        // 得到上下文基础配置
-        const context = require('../src/render/libs/interface/baseContext.js');
-        // 得到各环境服务地址
-        const { serverUrl } = require('../config/proxyConfig.js');
-        context.api = serverUrl[this.setup.versionType] + context.api;
-        fs.writeFileSync(path.join(__dirname, '../src/render/libs/interface/context.js'), `module.exports = ${JSON.stringify(context, null, 4)}`);
     },
     // 启动调试
     runDev() {
@@ -83,12 +40,11 @@ const dev = {
         return new Promise((resolve, reject) => {
             console.log('启动渲染进程调试......');
             const WebpackDevServer = require('webpack-dev-server');
-            const devServerConfig = require('../config/devServerConfig.js');
             const webpackConfig = require('./webpack.render.config.js');
             webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
             webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
             
-            const { host, port, proxy } = devServerConfig;
+            const { host, port, proxy } = config.devServer;
             const compiler = webpack(webpackConfig);
             compiler.hooks.done.tap('done', stats => {
                 const compilation = stats.compilation
@@ -103,8 +59,6 @@ const dev = {
                 });
                 console.log(chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) +
                     chalk.white('渲染进程调试完毕'));
-                // 输出运行环境
-                consoleInfo.runTime(this.setup.versionType);
                 resolve('');
             })
             new WebpackDevServer(
