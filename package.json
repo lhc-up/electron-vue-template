@@ -5,7 +5,7 @@
     "appName": "electron-vue-template",
     "main": "app/main.js",
     "scripts": {
-        "dev": "node ./buildClient/dev.js",
+        "dev": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=electron node ./buildClient/dev.js",
         "devweb": "node ./buildWeb/dev.js",
         "build": "node ./buildClient/build.js",
         "buildweb": "node ./buildWeb/build.js"
@@ -79,6 +79,7 @@
         "autoprefixer": "^9.7.6",
         "axios": "^0.19.2",
         "babel-loader": "^8.1.0",
+        "cross-env": "^7.0.3",
         "css-hot-loader": "^1.4.4",
         "css-loader": "^3.5.3",
         "electron": "^24.2.0",

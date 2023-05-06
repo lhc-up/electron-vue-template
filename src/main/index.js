@@ -11,7 +11,7 @@ const process = require("process");
 const url = require("url");
 const path = require("path");
 const cookie = require('cookie');
-const devServerConfig = require('@config/devServerConfig.js');
+const config = require('@config/index.js');
 const remote = require('@electron/remote/main');
 
 const devMode = process.env.NODE_ENV === "development";
@@ -28,7 +28,7 @@ function createWindow() {
     let wwwroot = global.wwwroot.path || __dirname;
     let filePath = url.pathToFileURL(path.join(wwwroot, 'index.html')).href;
     console.log(filePath)
-    let indexUrl = `http://${devServerConfig.host}:${devServerConfig.port}/`;
+    let indexUrl = `http://${config.devServer.host}:${config.devServer.port}/`;
 
     let config = {
         title: "electron-vue-template",

@@ -1,30 +1,37 @@
 /**
-* Tip:    devServer的配置
-* Author: haoluo
-* Data:   2020-02-25
-* Tips:   使用以下命令启动各环境配置,npm run dev [dev|test|release]
-**/
-const { proxyMap } = require("./proxyConfig.js");
-const envList = ["dev", "test", "release"];
+ * devServer相关配置
+ */
+const hostMap = {
+    dev: 'https://dev.server.com:8088',
+    test: 'https://test.server.com',
+    release: 'https://server.com'
+}
 
-// 默认代理到正式环境
-let proxy = proxyMap.release;
-let currEnv = "release";
+const proxyPath = ['/api/', '/sys/'];
 
-// 根据进程参数选择代理地址
-envList.forEach(env => {
-    if (process.argv.indexOf(env) > 1) {
-        currEnv = env;
-        proxy = proxyMap[env] || proxy;
-    }
+const proxyMap = {};
+Object.keys(hostMap).forEach(env => {
+    proxyMap[env] = {};
+    proxyPath.forEach(prefix => {
+        const target = hostMap[env];
+        proxyMap[env][prefix] = {
+            target,
+            secure: false,
+            changeOrigin: true,
+            headers: {
+                Referer: target
+            }
+        }
+    });
 });
+
 // 导出服务配置
 module.exports = {
-    host: '127.0.0.1',
-    port: 8098,
-    // 当前运行环境
-    currEnv,
-    // 调试完打开浏览器
-    openBrowserAfterComplete: true,
-    proxy
-};
+    devServerConfig: {
+        host: '127.0.0.1',
+        port: 8888,
+        openBrowserAfterComplete: true,
+        proxy: proxyMap[process.env.PROXY_ENV]
+    },
+    hostMap
+}
