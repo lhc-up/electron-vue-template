@@ -1,6 +1,6 @@
 /*
 * Name:    渲染进程配置
-* Author: haoluo
+* Author: luohao
 * Date:   2019-10-30
 */
 const path = require('path');

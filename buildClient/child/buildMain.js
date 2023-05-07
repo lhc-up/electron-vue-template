@@ -1,6 +1,6 @@
 /**
 * Tip:    打包主进程
-* Author: haoluo
+* Author: luohao
 * Data:   2019-12-23
 **/
 

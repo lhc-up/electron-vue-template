@@ -1,6 +1,6 @@
 /*
 * Tip:    打包自动更新
-* Author: haoluo
+* Author: luohao
 * Data:   2020-02-29
 */
 const chalk = require('chalk');

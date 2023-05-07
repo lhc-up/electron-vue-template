@@ -1,6 +1,6 @@
 /*
 * Tip:    自动更新配置
-* Author: haoluo
+* Author: luohao
 * Data:   2020-02-29
 */
 const path = require('path');
