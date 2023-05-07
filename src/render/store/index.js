@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     strict: true,
     state: {
         userInfo: {
-            name: 'haoluo',
+            name: 'luohao',
             address: 'beijing'
         }
     },

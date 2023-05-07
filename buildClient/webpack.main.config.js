@@ -1,6 +1,6 @@
 /**
 * Tip:    主进程打包配置
-* Author: haoluo
+* Author: luohao
 * Data:   2019-12-23
 **/
 const path = require('path');
