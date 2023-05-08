@@ -1,8 +1,3 @@
-/**
-* Tip:    打包预加载js
-* Author: luohao
-* Data:   2020-02-29
-**/
 const chalk = require('chalk');
 const webpack = require('webpack');
 const preloadRenderConfig = require('../webpack.preload.config.js');

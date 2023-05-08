@@ -1,13 +1,8 @@
-/*
-* Name:    渲染进程配置
-* Author: luohao
-* Date:   2019-10-30
-*/
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const context = require('../src/render/libs/interface/context.js');
+const { context } = require('../config/index.js');
 
 // 是否是调试模式
 const devMode = process.env.NODE_ENV === 'development';
@@ -108,7 +103,7 @@ module.exports = {
                     options: {
                         esModule: false,
                         limit: 2048,
-                        name: `.${context.name}/images/[name].[ext]`
+                        name: `.${context.page}/images/[name].[ext]`
                     }
                 }]
             },
@@ -119,7 +114,7 @@ module.exports = {
                     options: {
                         esModule: false,
                         limit: 2048,
-                        name: `.${context.name}/images/[name].[ext]`
+                        name: `.${context.page}/images/[name].[ext]`
                     }
                 }]
             }

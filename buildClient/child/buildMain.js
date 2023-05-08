@@ -1,9 +1,3 @@
-/**
-* Tip:    打包主进程
-* Author: luohao
-* Data:   2019-12-23
-**/
-
 const chalk = require('chalk');
 const webpack = require('webpack');
 const mainRenderConfig = require('../webpack.main.config.js');

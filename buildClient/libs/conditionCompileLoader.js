@@ -1,8 +1,5 @@
-/**
- * by: luohao 2020年08月11日
- * name: 条件编译webpack loader
- * notes: 条件编译，而不是条件执行！匹配标识必须成对出现，不支持嵌套
-*/
+// 条件编译webpack loader
+// 条件编译，而不是条件执行！匹配标识必须成对出现，不支持嵌套
 
 // 使用方式：(ELECTRON需要在引入loader时配置)
 /* IF_ELECTRON */

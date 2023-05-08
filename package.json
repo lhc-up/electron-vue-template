@@ -5,12 +5,11 @@
     "appName": "electron-vue-template",
     "main": "app/main.js",
     "scripts": {
-        "dev": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=electron node ./buildClient/dev.js",
-        "devweb": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=web node ./buildWeb/dev.js",
+        "start": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=electron node ./buildClient/dev.js",
         "build": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=electron node ./buildClient/build.js",
-        "buildweb": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=web node ./buildWeb/build.js"
+        "start:web": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=web node ./buildWeb/dev.js",
+        "build:web": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=web node ./buildWeb/build.js"
     },
-    "author": "luohao",
     "license": "ISC",
     "browserslist": [
         "> 10%",
@@ -64,7 +63,10 @@
             "allowElevation": true,
             "artifactName": "${productName}-安装包-V${version}.${ext}",
             "runAfterFinish": true,
-            "shortcutName": "Electron+vue+webpack-template"
+            "shortcutName": "Electron+vue+webpack-template",
+            "uninstallDisplayName": "${productName}",
+            "guid": "com.template.webpack.vue.electron",
+            "language": "2052"
         }
     },
     "devDependencies": {

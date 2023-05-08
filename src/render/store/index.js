@@ -7,10 +7,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     strict: true,
     state: {
-        userInfo: {
-            name: 'luohao',
-            address: 'beijing'
-        }
+        userInfo: {}
     },
     getters: {},
     mutations,

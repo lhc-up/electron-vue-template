@@ -1,8 +1,3 @@
-/*
-* Tip:    打包渲染进程
-* Author: luohao
-* Data:   2020-02-29
-*/
 const chalk = require('chalk');
 const webpack = require('webpack');
 const viewRenderConfig = require('../webpack.render.config.js');
