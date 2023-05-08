@@ -7,6 +7,18 @@ module.exports = [
             author: '--',
             parentRouter: '--'
         },
-        component: () => import('../views/index.vue')
+        component: () => import('../views/index.vue'),
+        children: [
+            {
+                path: '/checkUpdate.html',
+                name: 'checkUpdate',
+                meta: {
+                    title: 'checkUpdate',
+                    author: '--',
+                    parentRouter: '--'
+                },
+                component: () => import('../views/checkUpdate.vue')
+            }
+        ]
     }
 ];
