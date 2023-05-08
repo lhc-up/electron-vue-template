@@ -1,6 +1,6 @@
-<!-- render>views>index.vue -->
 <template>
     <div>
+        <Button>sdfsd</Button>fsdfs
         <router-view></router-view>
     </div>
 </template>

@@ -3,8 +3,7 @@ const { dependencies } = require('../package.json');
 module.exports = {
     mode: process.env.NODE_ENV,
     entry: {
-        main: ['./src/main/main.js'],
-        preload: ['./src/render/preload/index.js']
+        main: ['./src/main/main.js']
     },
     output: {
         path: path.join(process.cwd(), 'app'),

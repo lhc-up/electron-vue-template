@@ -1,10 +1,13 @@
 import Vue from 'vue';
+import ViewUI from 'view-design';
 import VueRouter from 'vue-router';
 import store from './store/index.js';
 import routers from './router/index.js';
 import index from './views/index.vue';
+import '@/render/libs/css/public.less';
 
 Vue.use(VueRouter);
+Vue.use(ViewUI);
 
 let router = new VueRouter({
     // mode: 'history',
@@ -15,8 +18,8 @@ let router = new VueRouter({
 Vue.config.silent = true;
 const app = new Vue({
     el: '#app',
-    router: router,
-    store: store,
+    router,
+    store,
     render: h => h(index)
 });
 

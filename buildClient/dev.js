@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const electron = require('electron');
 const { mainBuilder } = require('./child/buildMain.js');
+const { preloadBuilder } = require('./child/buildPreload.js');
 const config = require('../config/index.js');
 
 const dev = {
@@ -13,7 +14,7 @@ const dev = {
     },
     // 启动调试
     runDev() {
-        Promise.all([this.devRenderer(), mainBuilder()]).then(() => {
+        Promise.all([this.devRenderer(), preloadBuilder(), mainBuilder()]).then(() => {
             this.startElectron();
         }).catch(err => {
             console.log(err);
