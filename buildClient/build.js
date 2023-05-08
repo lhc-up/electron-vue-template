@@ -1,71 +1,15 @@
-/**
- * @name: 构建APP
- * @author: luohao
- * @date: 2020-05-11
- * @desc: ------------------------
- * npm run buildApp 调试客户端
- * 参数：dev  为开发环境
- * 参数：test 为测试环境
- * 参数：show 为演示环境
- * 不传[show/test/dev]参数，默认为release正式环境
- * setup:  https://www.electron.build/configuration/configuration
-*/
-process.env.NODE_ENV = 'production';
 const fs = require('fs');
 const path = require('path');
 const consoleInfo = require('./libs/consoleInfo.js');
 const del = require('del');
+const { version } = require('../config/index.js');
 
 const build = {
-    // 版本信息
-    setup: {},
     run() {
         // 删除历史打包数据
         del(['./app/*', './pack/*']);
-        // 初始化版本信息
-        this.initSetup();
-        // 写出版本配置文件
-        this.writeVersionConfig();
-        // 写出上下文
-        this.writeContext();
         // 打包
         this.buildApp();
-    },
-    // 初始化版本信息
-    initSetup() {
-        // 得到原始版本文件信息
-        const setup = require('../config/version.js');
-        const runTimeObj = {
-            dev: '开发版',
-            test: '测试版',
-            release: '正式版'
-        };
-        setup.versionType = 'release';
-        setup.versionName = runTimeObj.release;
-        // 发布时间
-        setup.publishTime = Date.now();
-        Object.keys(runTimeObj).forEach(key => {
-            if (process.argv.indexOf(key) > 1) {
-                setup.versionType = key;
-                setup.versionName = runTimeObj[key];
-            }
-        });
-        // 输出运行环境
-        consoleInfo.runTime(setup.versionType);
-        this.setup = setup;
-    },
-    // 写出版本配置文件
-    writeVersionConfig() {
-        fs.writeFileSync(path.join(__dirname, '../config/version.js'), `module.exports = ${JSON.stringify(this.setup, null, 4)}`);
-    },
-    // 写出上下文
-    writeContext() {
-        // 得到上下文
-        const context = require('../src/render/libs/interface/baseContext.js');
-        // 得到各环境服务地址
-        const { serverUrl } = require('../config/proxyConfig.js');
-        context.api = serverUrl[this.setup.versionType] + context.api;
-        fs.writeFileSync(path.join(__dirname, '../src/render/libs/interface/context.js'), `module.exports = ${JSON.stringify(context, null, 4)}`);
     },
     // 打包
     buildApp() {
@@ -84,7 +28,7 @@ const build = {
             }
             // 要压缩的文件夹
             let zipPath = viewRenderConfig.output.path;
-            let fileName = this.setup.versionType + '-' + this.setup.version.join('.');
+            let fileName = process.env.PROXY_ENV + '-' + version.join('.');
             // 压缩的文件
             let filePath = path.join(zipPath, `../pack/${fileName}.zip`);
             this.compress(zipPath, filePath, 7, (type, msg) => {
@@ -103,17 +47,16 @@ const build = {
     },
     // 打包主进程和自动更新
     packMainAndUpdate() {
-        const { updateBuilder } = require('./child/buildUpdate.js');
         const { mainBuilder } = require('./child/buildMain.js');
-        Promise.all([mainBuilder(), updateBuilder()]).then(resolve => {
+        mainBuilder().then(res => {
             const electronBuilder = require('electron-builder');
             const packageJson = require('../package.json');
-            resolve.forEach(res => console.log('打包输出===>', res));
-            packageJson.version = this.setup.version.slice(0, 3).join('.');
+            console.log('打包输出===>', res)
+            packageJson.version = version.slice(0, 3).join('.');
             fs.writeFileSync(path.join(__dirname, '../package.json'), JSON.stringify(packageJson, null, 4));
             electronBuilder.build().then(() => {
                 // 输出运行环境
-                consoleInfo.runTime(this.setup.versionType);
+                consoleInfo.runTime(process.env.PROXY_ENV);
                 // 删除无用日志文件
                 del(['./pack/*.yaml', './pack/*.yml', './pack/*.blockmap']);
                 this.buildEnd();

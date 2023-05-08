@@ -6,9 +6,9 @@
     "main": "app/main.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=electron node ./buildClient/dev.js",
-        "devweb": "node ./buildWeb/dev.js",
-        "build": "node ./buildClient/build.js",
-        "buildweb": "node ./buildWeb/build.js"
+        "devweb": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=web node ./buildWeb/dev.js",
+        "build": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=electron node ./buildClient/build.js",
+        "buildweb": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=web node ./buildWeb/build.js"
     },
     "author": "luohao",
     "license": "ISC",

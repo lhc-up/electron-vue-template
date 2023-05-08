@@ -1,24 +1,9 @@
-/**
- * @name: 本地调试APP
- * @author: luohao
- * @date: 2020-05-11
- * @desc: ------------------------
- * npm run devApp 调试客户端
- * 参数：dev  为开发环境
- * 参数：test 为测试环境
- * 不传[test/dev]参数，默认为release正式环境
-*/
-process.env.NODE_ENV = 'development';
-
 const path = require('path');
-const fs = require('fs');
 const repl = require('repl');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const electron = require('electron');
-const consoleInfo = require('./libs/consoleInfo.js');
 const { mainBuilder } = require('./child/buildMain.js');
-const { updateBuilder } = require('./child/buildUpdate.js');
 const config = require('../config/index.js');
 
 const dev = {
@@ -28,7 +13,7 @@ const dev = {
     },
     // 启动调试
     runDev() {
-        Promise.all([this.devRenderer(), updateBuilder(), mainBuilder()]).then(() => {
+        Promise.all([this.devRenderer(), mainBuilder()]).then(() => {
             this.startElectron();
         }).catch(err => {
             console.log(err);
@@ -86,8 +71,7 @@ const dev = {
     // 启动Electron
     startElectron() {
         const { spawn } = require('child_process');
-        const electronProcess = spawn(electron, [path.join(__dirname, '../app/main.js')]);
-        //'--inspect=5858',
+        const electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../app/main.js')]);
         electronProcess.stdout.on('data', data => {
             this.electronLog(data, 'blue')
         });
