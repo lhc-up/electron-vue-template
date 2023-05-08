@@ -3,7 +3,7 @@ import ViewUI from 'view-design';
 import VueRouter from 'vue-router';
 import store from './store/index.js';
 import routers from './router/index.js';
-import index from './views/index.vue';
+import index from './App.vue';
 import '@/render/libs/css/public.less';
 
 Vue.use(VueRouter);
