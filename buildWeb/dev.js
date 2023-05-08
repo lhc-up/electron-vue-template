@@ -20,7 +20,7 @@ const dev = {
         // 输出运行环境
         consoleInfo.runTime(process.env.PROXY_ENV);
 
-        let { host, port, proxy, openBrowserAfterComplete } = devServer;
+        let { host, port, proxy } = devServer;
         // 同时调试web端和客户端，区分端口
         port += 1;
         const compiler = webpack(webpackConfig);
@@ -58,7 +58,7 @@ const dev = {
             });
             console.log(chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + chalk.white('调试完毕'));
             consoleInfo.runTime(process.env.PROXY_ENV);//输出运行环境
-            if (openBrowserAfterComplete) {
+            if (devServer.openBrowserAfterComplete) {
                 const cmd = os.platform() === 'win32' ? 'explorer' : 'open';
                 require('child_process').exec(`${cmd} 'http://${host}:${port}'`);
                 devServer.openBrowserAfterComplete = false;
