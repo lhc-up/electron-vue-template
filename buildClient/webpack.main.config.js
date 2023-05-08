@@ -1,8 +1,3 @@
-/**
-* Tip:    主进程打包配置
-* Author: luohao
-* Data:   2019-12-23
-**/
 const path = require('path');
 const { dependencies } = require('../package.json');
 module.exports = {
