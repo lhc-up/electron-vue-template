@@ -1,15 +1,9 @@
-/**
- * @name: web端打包配置
- * @author: luohao
- * @date: 2020-05-11
- * @desc: 
-*/
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Autoprefixer = require('autoprefixer');
-const context = require('../src/render/libs/interface/context.js');
+const { context } = require('../config/index.js');
 
 // 是否是调试模式
 const devMode = process.env.NODE_ENV === 'development';
@@ -22,8 +16,8 @@ var webpackBaseConfig = {
     output: {
         path: path.resolve(process.cwd(), 'dist'),
         publicPath: '/',
-        filename: `.${context.name}/js/[name]${devMode ?  '' : '-[hash:8]'}.js`,
-        chunkFilename: `.${context.name}/js/[name]${devMode ? '' : '-[hash]'}.js`,
+        filename: `.${context.page}/js/[name]${devMode ?  '' : '-[hash:8]'}.js`,
+        chunkFilename: `.${context.page}/js/[name]${devMode ? '' : '-[hash]'}.js`,
     },
     optimization: {
         runtimeChunk: false,
@@ -118,7 +112,7 @@ var webpackBaseConfig = {
                     options: {
                         esModule: false,
                         limit: 2048,
-                        name: `.${context.name}/images/[name].[hash:8].[ext]`
+                        name: `.${context.page}/images/[name].[hash:8].[ext]`
                     }
                 }]
             },
@@ -129,7 +123,7 @@ var webpackBaseConfig = {
                     options: {
                         esModule: false,
                         limit: 2048,
-                        name: `.${context.name}/images/[name].[ext]`
+                        name: `.${context.page}/images/[name].[ext]`
                     }
                 }]
             },
@@ -160,8 +154,8 @@ var webpackBaseConfig = {
             favicon: false
         }),
         new MiniCssExtractPlugin({
-            filename: `.${context.name}/css/[name]${devMode ? '' : '-[hash]'}.css`,
-            chunkFilename: `.${context.name}/css/[name]${devMode ? '' : '-[hash]'}.css`,
+            filename: `.${context.page}/css/[name]${devMode ? '' : '-[hash]'}.css`,
+            chunkFilename: `.${context.page}/css/[name]${devMode ? '' : '-[hash]'}.css`,
             ignoreOrder: true
         }),
         new VueLoaderPlugin()

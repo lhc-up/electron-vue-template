@@ -1,34 +1,18 @@
-/**
- * @name: 打包web端
- * @author: luohao
- * @date: 2020-05-11
- * @desc: 
-*/
-process.env.NODE_ENV = 'production';
 const webpack = require('webpack');
-const path = require('path');
-const fs = require('fs');
 const chalk = require('chalk');
-const devServerConfig = require('../config/devServerConfig.js');
 const consoleInfo = require('../buildClient/libs/consoleInfo.js');
 const webpackConfig = require('./webpack.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const context = require('../src/render/libs/interface/baseContext.js');
 
 const build = {
     run() {
         // 输出运行环境
-        consoleInfo.runTime(devServerConfig.currEnv);
+        consoleInfo.runTime(process.env.PROXY_ENV);
         // 删除历史打包数据
         require('del')(['./dist/*']);
-        this.writeContext();
         this.addPluginForWebpack();
         this.buildApp();
-    },
-    // 写出上下文
-    writeContext() {
-        fs.writeFileSync(path.join(__dirname, '../src/render/libs/interface/context.js'), `module.exports = ${JSON.stringify(context, null, 4)}`);
     },
     // 打包
     buildApp() {
@@ -51,7 +35,7 @@ const build = {
             log += chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + '\n';
             console.log(log);
             // 输出运行环境
-            consoleInfo.runTime(devServerConfig.currEnv);
+            consoleInfo.runTime(process.env.PROXY_ENV);
         });
     },
     // 添加额外的webpack插件
