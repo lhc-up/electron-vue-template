@@ -28,6 +28,9 @@ module.exports = {
     ],
     resolve: {
         extensions: ['.js'],
+        fallback: {
+            url: require.resolve('url')
+        },
         alias: {
             '@': path.resolve(__dirname, '../src')
         }

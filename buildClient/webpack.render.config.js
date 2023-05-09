@@ -134,6 +134,9 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.json', '.vue'],
+        fallback: {
+            url: require.resolve('url')
+        },
         alias: {
             '@': path.resolve(__dirname, '../src'),
             '@config': path.resolve(__dirname, '../config'),
