@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import marked from 'marked';
 export default {
     data() {
         return {
@@ -10,7 +11,8 @@ export default {
         }
     },
     mounted() {
-        
+        const readme = require('../../../README.md');
+        console.log(readme)
     }
 };
 </script>

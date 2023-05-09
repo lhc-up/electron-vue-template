@@ -27,8 +27,6 @@ const dev = {
             console.log('启动渲染进程调试......');
             const WebpackDevServer = require('webpack-dev-server');
             const webpackConfig = require('./webpack.render.config.js');
-            webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
-            webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
             
             const { host, port, proxy } = config.devServer;
             const compiler = webpack(webpackConfig);
@@ -48,24 +46,21 @@ const dev = {
                 resolve('');
             })
             new WebpackDevServer(
-                compiler, {
-                    contentBase: webpackConfig.output.path,
-                    publicPath: webpackConfig.output.publicPath,
-                    inline: true,
+                {
                     hot: true,
-                    quiet: true,
-                    progress: true,
-                    disableHostCheck: true,
                     historyApiFallback: {
                         disableDotRule: true
                     },
                     port,
                     host,
                     proxy
-                }
-            ).listen(port, host, err => {
-                if (err) return reject(err);
+                },
+                compiler
+            ).start(() => {
                 console.log(`Listening at http://${host}:${port}`);
+                resolve();
+            }).catch(err => {
+                reject(err);
             });
         });
     },

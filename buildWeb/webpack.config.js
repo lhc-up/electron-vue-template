@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Autoprefixer = require('autoprefixer');
 const { context } = require('../config/index.js');
+const webpack = require('webpack');
 
 // 是否是调试模式
 const devMode = process.env.NODE_ENV === 'development';
@@ -16,8 +17,8 @@ var webpackBaseConfig = {
     output: {
         path: path.resolve(process.cwd(), 'dist'),
         publicPath: '/',
-        filename: `.${context.page}/js/[name]${devMode ?  '' : '-[hash:8]'}.js`,
-        chunkFilename: `.${context.page}/js/[name]${devMode ? '' : '-[hash]'}.js`,
+        filename: `.${context.page}/js/[name]${devMode ?  '' : '-[contenthash:8]'}.js`,
+        chunkFilename: `.${context.page}/js/[name]${devMode ? '' : '-[contenthash:8]'}.js`,
     },
     optimization: {
         runtimeChunk: false,
@@ -112,7 +113,7 @@ var webpackBaseConfig = {
                     options: {
                         esModule: false,
                         limit: 2048,
-                        name: `.${context.page}/images/[name].[hash:8].[ext]`
+                        name: `.${context.page}/images/[name].[contenthash:8].[ext]`
                     }
                 }]
             },
@@ -130,19 +131,38 @@ var webpackBaseConfig = {
             {
                 test: /\.(html|tpl)$/,
                 loader: 'html-loader'
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                    },
+                    {
+                        loader: 'markdown-loader',
+                        options: {
+                            // Pass options to marked
+                            // See https://marked.js.org/using_advanced#options
+                        }
+                    }
+                ]
             }
         ]
     },
     resolve: {
         extensions: ['.js', '.json', '.vue'],
-        modules: [
-            path.resolve(process.cwd(), 'src'),
-            path.resolve(process.cwd(), 'node_modules')
-        ],
+        // modules: [
+        //     path.resolve(process.cwd(), 'src'),
+        //     path.resolve(process.cwd(), 'config'),
+        //     path.resolve(process.cwd(), 'node_modules')
+        // ],
+        fallback: {
+            url: false
+        },
         alias: {
             '@': path.resolve(process.cwd(), 'src'),
             '@config': path.resolve(__dirname, '../config'),
-            '@images': path.resolve(__dirname, '../src/render/libs/images')
+            '@images': path.resolve(process.cwd(), 'src/render/libs/images')
         }
     },
     plugins: [
@@ -154,11 +174,14 @@ var webpackBaseConfig = {
             favicon: false
         }),
         new MiniCssExtractPlugin({
-            filename: `.${context.page}/css/[name]${devMode ? '' : '-[hash]'}.css`,
-            chunkFilename: `.${context.page}/css/[name]${devMode ? '' : '-[hash]'}.css`,
+            filename: `.${context.page}/css/[name]${devMode ? '' : '-[contenthash:8]'}.css`,
+            chunkFilename: `.${context.page}/css/[name]${devMode ? '' : '-[contenthash:8]'}.css`,
             ignoreOrder: true
         }),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(process.env)
+        })
     ]
 }
 module.exports = webpackBaseConfig;

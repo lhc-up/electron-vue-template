@@ -1,12 +1,12 @@
-const os = require('os');
 const webpack = require('webpack');
 const chalk = require('chalk');
 const consoleInfo = require('../buildClient/libs/consoleInfo.js');
+const fse = require('fs-extra');
+const path = require('path');
 
 const dev = {
     run() {
-        // 删除历史打包数据
-        require('del')(['./dist/*']);
+        fse.emptyDirSync(path.resolve(__dirname, '../dist'));
         this.runDev();
     },
     // 启动调试
@@ -14,8 +14,6 @@ const dev = {
         const WebpackDevServer = require('webpack-dev-server');
         const { devServer } = require('../config/index.js');
         const webpackConfig = require('./webpack.config.js');
-        webpackConfig.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
-        webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
 
         // 输出运行环境
         consoleInfo.runTime(process.env.PROXY_ENV);
@@ -25,25 +23,20 @@ const dev = {
         port += 1;
         const compiler = webpack(webpackConfig);
         new WebpackDevServer(
-            compiler, {
-                contentBase: webpackConfig.output.path,
-                publicPath: webpackConfig.output.publicPath,
-                inline: true,
+            {
                 hot: true,
-                hotOnly: true,
-                quiet: true,
-                progress: true,
                 compress: true,
-                disableHostCheck: true,
                 historyApiFallback: {
                     disableDotRule: true
                 },
+                open: true,
                 port,
                 host,
                 proxy
-            }
-        ).listen(port, host, err => {
-            if (err) return console.log(err);
+            },
+            compiler
+        ).start().catch(err => {
+            console.log(err);
         });
         compiler.hooks.done.tap('done', stats => {
             const compilation = stats.compilation;
@@ -58,12 +51,6 @@ const dev = {
             });
             console.log(chalk.green(`time：${(stats.endTime - stats.startTime) / 1000} s\n`) + chalk.white('调试完毕'));
             consoleInfo.runTime(process.env.PROXY_ENV);//输出运行环境
-            if (devServer.openBrowserAfterComplete) {
-                const cmd = os.platform() === 'win32' ? 'explorer' : 'open';
-                require('child_process').exec(`${cmd} 'http://${host}:${port}'`);
-                devServer.openBrowserAfterComplete = false;
-            }
-            console.log(`Listening at http://${host}:${port}`);
         });
     }
 };

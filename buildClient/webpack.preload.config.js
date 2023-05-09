@@ -14,10 +14,6 @@ module.exports = {
         runtimeChunk: false,
         minimize: true
     },
-    node: {
-        fs: 'empty',
-        __dirname:false
-    },
     module: {
         rules: [
             {

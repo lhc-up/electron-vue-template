@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const consoleInfo = require('./libs/consoleInfo.js');
-const del = require('del');
+const fse = require('fs-extra');
 const { version } = require('../config/index.js');
 
 const build = {
     run() {
-        // 删除历史打包数据
-        del(['./app/*', './pack/*']);
+        fse.emptyDirSync(path.resolve(__dirname, '../app'));
+        fse.emptyDirSync(path.resolve(__dirname, '../pack'));
         // 打包
         this.buildApp();
     },
@@ -57,8 +57,6 @@ const build = {
             electronBuilder.build().then(() => {
                 // 输出运行环境
                 consoleInfo.runTime(process.env.PROXY_ENV);
-                // 删除无用日志文件
-                del(['./pack/*.yaml', './pack/*.yml', './pack/*.blockmap']);
                 this.buildEnd();
             }).catch(error => {
                 console.error(error);

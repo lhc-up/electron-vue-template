@@ -1,6 +1,7 @@
+const { context } = require('../../../config/index.js');
 module.exports = [
     {
-        path: '/index.html',
+        path: context.page + '/index.html',
         name: 'index',
         meta: {
             title: '首页',
@@ -10,7 +11,17 @@ module.exports = [
         component: () => import('../views/index.vue'),
         children: [
             {
-                path: '/checkUpdate.html',
+                path: context.page + '/guide.html',
+                name: 'guide',
+                meta: {
+                    title: 'guide',
+                    author: '--',
+                    parentRouter: '--'
+                },
+                component: () => import('../views/guide.vue')
+            },
+            {
+                path: context.page + '/checkUpdate.html',
                 name: 'checkUpdate',
                 meta: {
                     title: 'checkUpdate',

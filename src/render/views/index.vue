@@ -24,6 +24,10 @@ export default {
         return {
             menuList: [
                 {
+                    id: -1,
+                    name: '框架介绍'
+                },
+                {
                     id: 1,
                     name: '检查更新'
                 },
@@ -44,7 +48,7 @@ export default {
                     name: '多窗口'
                 }
             ],
-            currentMenuId: 1
+            currentMenuId: -1
         }
     },
     methods: {
@@ -54,7 +58,7 @@ export default {
     },
     mounted() {
         this.$router.push({
-            name: 'checkUpdate'
+            name: 'guide'
         });
     }
 }
