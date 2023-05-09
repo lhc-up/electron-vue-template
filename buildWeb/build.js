@@ -4,13 +4,14 @@ const consoleInfo = require('../buildClient/libs/consoleInfo.js');
 const webpackConfig = require('./webpack.config.js');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const fse = require('fs-extra');
+const path = require('path');
 
 const build = {
     run() {
         // 输出运行环境
         consoleInfo.runTime(process.env.PROXY_ENV);
-        // 删除历史打包数据
-        require('del')(['./dist/*']);
+        fse.emptyDirSync(path.resolve(__dirname, '../dist'));
         this.addPluginForWebpack();
         this.buildApp();
     },

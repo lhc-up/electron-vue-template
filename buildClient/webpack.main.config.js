@@ -10,10 +10,6 @@ module.exports = {
         libraryTarget: 'commonjs2',
         filename: './[name].js'
     },
-    node: {
-        fs: 'empty',
-        __dirname: false
-    },
     optimization: {
         runtimeChunk: false,
         minimize: true

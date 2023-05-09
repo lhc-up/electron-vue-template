@@ -1,12 +1,13 @@
 const chalk = require('chalk');
 const webpack = require('webpack');
 const mainRenderConfig = require('../webpack.main.config.js');
+const fse = require('fs-extra');
 function mainBuilder() {
     return new Promise((resolve, reject) => {
         console.log('打包APP主进程......');
         let log = '';
         // 删除历史打包数据
-        require('del')(['./app/main.js']);
+        // fse.rmSync('./app/main.js');
         const mainRenderCompiler = webpack(mainRenderConfig);
         mainRenderCompiler.run((err, stats) => {
             if (err) {

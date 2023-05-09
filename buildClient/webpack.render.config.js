@@ -15,11 +15,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, '../app/'),
         publicPath: devMode ? '/' : '',
-        filename: './js/[name].[hash:8].js',
+        filename: './js/[name].[contenthash:8].js',
         globalObject: 'this'
-    },
-    node: {
-        fs: 'empty'
     },
     optimization: {
         runtimeChunk: false,
@@ -117,6 +114,21 @@ module.exports = {
                         name: `.${context.page}/images/[name].[ext]`
                     }
                 }]
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                    },
+                    {
+                        loader: 'markdown-loader',
+                        options: {
+                            // Pass options to marked
+                            // See https://marked.js.org/using_advanced#options
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -137,8 +149,8 @@ module.exports = {
             hash: false
         }),
         new MiniCssExtractPlugin({
-            filename: devMode ? `[name]-render.css` : `[name]-render.[hash:8].css`,
-            chunkFilename: devMode ? '[name]-render.css' : '[name]-render.[hash:8].css',
+            filename: devMode ? `[name]-render.css` : `[name]-render.[contenthash:8].css`,
+            chunkFilename: devMode ? '[name]-render.css' : '[name]-render.[contenthash:8].css',
             ignoreOrder: true
         }),
         new VueLoaderPlugin()
