@@ -1,9 +1,8 @@
 <template>
-    <div class="content">检查更新</div>
+    <div class="content" v-html="text"></div>
 </template>
 
 <script>
-import marked from 'marked';
 export default {
     data() {
         return {
@@ -12,7 +11,15 @@ export default {
     },
     mounted() {
         const readme = require('../../../README.md');
-        console.log(readme)
+        this.text = readme.default;
     }
 };
 </script>
+<style lang="less" scoped>
+.content {
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+</style>

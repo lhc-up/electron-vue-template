@@ -151,18 +151,13 @@ var webpackBaseConfig = {
     },
     resolve: {
         extensions: ['.js', '.json', '.vue'],
-        // modules: [
-        //     path.resolve(process.cwd(), 'src'),
-        //     path.resolve(process.cwd(), 'config'),
-        //     path.resolve(process.cwd(), 'node_modules')
-        // ],
         fallback: {
-            url: false
+            url: require.resolve('url')
         },
         alias: {
-            '@': path.resolve(process.cwd(), 'src'),
+            '@': path.resolve(__dirname, '../src'),
             '@config': path.resolve(__dirname, '../config'),
-            '@images': path.resolve(process.cwd(), 'src/render/libs/images')
+            '@images': path.resolve(__dirname, '../src/render/libs/images')
         }
     },
     plugins: [
