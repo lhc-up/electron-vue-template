@@ -6,7 +6,7 @@
             </div>
             <div class="menuList">
                 <div
-                    :class="['menu', { current: menu.id == currentMenuId }]"
+                    :class="['menu', { current: menu.route == currentMenu }]"
                     @click="gotoMenu(menu)"
                     v-for="menu in menuList"
                     :key="menu.id">{{menu.name}}</div>
@@ -24,36 +24,37 @@ export default {
         return {
             menuList: [
                 {
-                    id: -1,
-                    name: '框架介绍'
+                    name: '框架介绍',
+                    route: 'guide'
                 },
                 {
-                    id: 1,
-                    name: '检查更新'
+                    name: '检查更新',
+                    route: 'checkUpdate'
                 },
                 {
-                    id: 2,
-                    name: 'chrome插件'
-                },
-                {
-                    id: 3,
-                    name: '数据库'
-                },
-                {
-                    id: 4,
                     name: '区分web端和客户端'
                 },
                 {
-                    id: 5,
+                    name: 'chrome插件'
+                },
+                {
+                    name: '数据库'
+                },
+                {
                     name: '多窗口'
                 }
             ],
-            currentMenuId: -1
+            currentMenu: 'guide'
         }
     },
     methods: {
         gotoMenu(menu) {
-            this.currentMenuId = menu.id;
+            if (menu.route == this.currentMenu) return;
+            if (!menu.route) return;
+            this.currentMenu = menu.route;
+            this.$router.push({
+                name: menu.route
+            });
         }
     },
     mounted() {

@@ -10,12 +10,9 @@
                     0,
                     0
                 ],
-                "title": "初始版本",
                 "hard": false,
-                "zipUrl": "",
-                "exeUrl": "",
-                "time": 1557041665892,
-                "logs": []
+                "zipUrl": "https://raw.githubusercontent.com/luohao8023/electron-vue-template/master/updateFiles/release-1.0.0.1.zip",
+                "exeUrl": ""
             }
         ]
     }

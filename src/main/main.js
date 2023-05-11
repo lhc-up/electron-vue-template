@@ -5,7 +5,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const remote = require('@electron/remote/main');
 remote.initialize();
 
-const BaseWindow = require('./win/baseWindow.js');
+const MainWindow = require('./win/index.js');
 
 // (electron) The default value of app.allowRendererProcessReuse is deprecated, it is currently "false".  
 // It will change to be "true" in Electron 9.  
@@ -27,7 +27,7 @@ Object.assign(global, {
 app.on('ready', () => {
     //注册快捷键打开控制台事件
     shortcut.register('Command+Control+Alt+F5');
-    const win = new BaseWindow();
+    const win = new MainWindow();
     win.create();
 });
 

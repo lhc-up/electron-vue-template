@@ -96,6 +96,7 @@
         "markdown-loader": "^8.0.0",
         "marked": "^5.0.1",
         "mini-css-extract-plugin": "^2.7.5",
+        "node-stream-zip": "^1.15.0",
         "postcss-loader": "^3.0.0",
         "progress-bar-webpack-plugin": "^2.1.0",
         "url": "^0.11.0",

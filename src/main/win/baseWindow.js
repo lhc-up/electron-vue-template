@@ -9,7 +9,7 @@ const remote = require('@electron/remote/main');
 
 const devMode = process.env.NODE_ENV === 'development';
 
-class BaseWindow1 extends EventEmitter {
+class BaseWindow extends EventEmitter {
     window = null;
     wwwroot = '';
     urlFilter = {
@@ -177,4 +177,4 @@ class BaseWindow1 extends EventEmitter {
     }
 }
 
-module.exports = BaseWindow1;
+module.exports = BaseWindow;
