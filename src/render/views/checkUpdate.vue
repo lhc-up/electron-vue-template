@@ -60,13 +60,13 @@ export default {
             });
         },
         download() {
-            this.downloading = true;
             // 这里的url需要从版本配置中获取
             const url = this.versionInfo.zipUrl;
             if (!url) {
                 alert('更新包不存在');
                 return;
             }
+            this.downloading = true;
             axios.get(url, {
                 responseType: 'arraybuffer',
                 onDownloadProgress: ({ loaded, total }) => {
