@@ -4,9 +4,8 @@ const url = require('url');
 const { ipcRenderer } = require('electron');
 const { app, getGlobal, getCurrentWindow } = require('@electron/remote');
 const StreamZip = require('node-stream-zip');
-// const pkgPath = path.join(app.getPath('userData'), 'pkg');
+const pkgPath = path.join(app.getPath('userData'), 'pkg');
 const tempPath = app.getPath('temp');
-const pkgPath = '/Users/luohao/Desktop/temp';
 import * as Event from '@/render/libs/js/event.js';
 
 // 保存下载好的版本更新文件
