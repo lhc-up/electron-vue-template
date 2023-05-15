@@ -67,5 +67,5 @@ updateFiles文件夹中有1.0.0.1小版本文件，可用于模拟自动更新�
 ### 打包web端
 
 ```bash
-npm run buildweb
+npm run build:web
 ```
