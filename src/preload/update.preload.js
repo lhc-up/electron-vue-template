@@ -31,15 +31,19 @@ Event.addEventListener('preload-update-save-exe-pkg', function savePkg({ version
 
 // 获取本地的版本更新文件
 Event.addEventListener('preload-update-pkg-list', function getPkgList({ pkgList=[] }) {
-    const fileList = fse.readdirSync(pkgPath).filter(v => {
-        return path.extname(v) === '.zip';
-    }).map(v => {
-        return {
-            zip: path.join(pkgPath, v),
-            dir: path.join(pkgPath, v).replace('.zip', '')
-        }
-    });
-    pkgList.push(...fileList);
+    try {
+        const fileList = fse.readdirSync(pkgPath).filter(v => {
+            return path.extname(v) === '.zip';
+        }).map(v => {
+            return {
+                zip: path.join(pkgPath, v),
+                dir: path.join(pkgPath, v).replace('.zip', '')
+            }
+        });
+        pkgList.push(...fileList);
+    } catch(err) {
+        console.log('不存在更新包');
+    }
 });
 
 Event.addEventListener('preload-update-load-pkg', ({ pkg }) => {
