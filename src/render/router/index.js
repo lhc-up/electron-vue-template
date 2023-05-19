@@ -29,6 +29,16 @@ module.exports = [
                     parentRouter: '--'
                 },
                 component: () => import('../views/checkUpdate.vue')
+            },
+            {
+                path: context.page + '/extensions.html',
+                name: 'extensions',
+                meta: {
+                    title: 'extensions',
+                    author: '--',
+                    parentRouter: '--'
+                },
+                component: () => import('../views/extensions.vue')
             }
         ]
     }

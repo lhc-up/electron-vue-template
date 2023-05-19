@@ -2,6 +2,7 @@ require("./libs/runCheck.js")(); //禁止打开多份
 require('./libs/compress.js');
 const shortcut = require("./libs/shortcut.js"); //注册快捷键
 const { app, BrowserWindow, ipcMain } = require("electron");
+import { addVueDevtool } from '@/main/libs/extensions.js';
 const remote = require('@electron/remote/main');
 remote.initialize();
 
@@ -24,16 +25,15 @@ Object.assign(global, {
     cookie: {}
 });
 
-app.on('ready', () => {
+app.on('ready', async () => {
     //注册快捷键打开控制台事件
     shortcut.register('Command+Control+Alt+F5');
+    await addVueDevtool();
     const win = new MainWindow();
     win.create();
 });
 
 app.on('window-all-closed', function () {
-    setTimeout(() => {
-        const allwindow = BrowserWindow.getAllWindows();
-        if (allwindow.length === 0) app.exit(1);
-    }, 500);
+    const allwindow = BrowserWindow.getAllWindows();
+    if (allwindow.length === 0) app.exit(1);
 });

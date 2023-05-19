@@ -35,7 +35,8 @@ export default {
                     name: '区分web端和客户端'
                 },
                 {
-                    name: 'chrome插件'
+                    name: 'chrome插件',
+                    route: 'extensions'
                 },
                 {
                     name: '数据库'
