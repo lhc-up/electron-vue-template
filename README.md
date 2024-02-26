@@ -10,21 +10,23 @@
 - [ ] auto-updater
 - [ ] 多窗口
 - [ ] 原生模块、dll
-- [ ] chrome插件
+- [x] chrome插件
 - [ ] 主进程断点调试
 - [ ] 单实例检查，同时只能启动一个客户端
-- [ ] 注册全局快捷键，打开调试窗口
+- [x] 注册全局快捷键，打开调试窗口
 - [ ] 主进程代码加密
 - [ ] 注册自定义协议，web端唤醒，传递参数
 - [ ] 分阶段打包，生成免安装程序、构建exe
 - [ ] 自定义nsis脚本
 - [ ] 按条件编译
-- [ ] 根据png格式的logo，打包时自动生成.ico或.icns格式的图片
+- [x] 根据png格式的logo，打包时自动生成.ico或.icns格式的图片[https://github.com/lhc-up/create-icons](https://github.com/lhc-up/create-icons)
 - [ ] 数据库
 - [ ] 录屏
 - [ ] 共享桌面
 - [ ] 不同系统安装包，Windows、Mac、Linux、国产操作系统等
 - [ ] Mac新建日程
+- [ ] 系统托盘
+- [ ] 右键菜单(程序级别和系统级别)
 
 ## 安装依赖
 
