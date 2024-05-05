@@ -12,7 +12,6 @@ yarn.lock
 npm-debug.log
 \._node_modules
 cache
-package-lock.json
 .vscode/
 dist/
 app/
