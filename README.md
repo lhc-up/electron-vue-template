@@ -31,7 +31,7 @@
 ## 安装依赖
 
 ```bash
-git clone https://github.com/luohao8023/electron-vue-template.git
+git clone https://github.com/lhc-up/electron-vue-template.git
 cd electron-vue-template
 npm install
 ```
