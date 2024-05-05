@@ -1,8 +1,7 @@
 const fse = require('fs-extra');
 const path = require('path');
 const url = require('url');
-const { ipcRenderer } = require('electron');
-const { app, getGlobal, getCurrentWindow } = require('@electron/remote');
+const { app, getCurrentWindow } = require('@electron/remote');
 const StreamZip = require('node-stream-zip');
 const pkgPath = path.join(app.getPath('userData'), 'pkg');
 const tempPath = app.getPath('temp');
@@ -19,6 +18,7 @@ Event.addEventListener('preload-update-save-zip-pkg', async function savePkg({ v
         const extractDir = savePath.replace(path.extname(savePath), '');
         fse.ensureDirSync(extractDir);
         await zip.extract(null, extractDir);
+        alert(`下载完成：${savePath}`);
     } catch(err) {
         console.log(err);
     }

@@ -8,7 +8,8 @@
         "start": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=electron node ./buildClient/dev.js",
         "build": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=electron node ./buildClient/build.js",
         "start:web": "cross-env NODE_ENV=development PROXY_ENV=dev PLATFORM=web node ./buildWeb/dev.js",
-        "build:web": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=web node ./buildWeb/build.js"
+        "build:web": "cross-env NODE_ENV=production PROXY_ENV=dev PLATFORM=web node ./buildWeb/build.js",
+        "server": "node ./updateServer/app.js"
     },
     "license": "ISC",
     "browserslist": [
@@ -95,6 +96,8 @@
         "fs-extra": "^11.1.1",
         "html-loader": "^4.2.0",
         "html-webpack-plugin": "^5.5.1",
+        "koa": "^2.15.3",
+        "koa-static": "^5.0.0",
         "less": "^3.11.1",
         "less-loader": "^6.1.0",
         "markdown-loader": "^8.0.0",
