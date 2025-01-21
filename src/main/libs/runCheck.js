@@ -1,8 +1,5 @@
-const {
-    app,
-    BrowserWindow
-} = require("electron");
-module.exports=()=>{
+const { app, BrowserWindow } = require('electron');
+module.exports = () => {
     // 单实例检查
     const gotTheLock = app.requestSingleInstanceLock();
     if (!gotTheLock) return app.quit();
@@ -15,4 +12,4 @@ module.exports=()=>{
             }
         });
     });
-}
+};

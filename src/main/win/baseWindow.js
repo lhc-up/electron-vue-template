@@ -161,7 +161,7 @@ class BaseWindow extends EventEmitter {
         (resHeaders['set-cookie'] || []).forEach(k => {
             // {
             //     SESSION: 'ZTBmMDAwM2ItMGM1MS00Mzk0LWI2YWUtZDI1M2E1M2RlMDdj',
-            //     Path: '/wj/admin/api/',
+            //     Path: '/api/',
             //     SameSite: 'Lax'
             // }
             // 只取cookie值（SESSION），其他限制字段不要
